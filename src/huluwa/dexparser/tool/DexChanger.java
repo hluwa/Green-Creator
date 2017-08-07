@@ -237,28 +237,18 @@ public class DexChanger extends FileChange {
 		this.move(dexFile.getHeader().link_off + dexFile.getHeader().link_size);
 		int off = this.position;
 		this.instData(data);
+		dexFile.getHeader().file_size += data.length;
 		dexFile.getHeader().link_size += data.length;
 		return off;
 	}
 
 	public void flush() {
-		super.flush(); // 先将修改的数据flush,否则this.data还是旧数据
-
-		DexHeader header = dexFile.getHeader();
 		try {
 			this.move(0);
-			MessageDigest mdTemp = MessageDigest.getInstance("SHA1");
-			mdTemp.update(this.data, 32, this.data.length - 32);
-			header.signature = mdTemp.digest(); // 计算Signature
-			System.arraycopy(header.signature, 0, this.data, 12, 20); // 覆盖原Signature
-			Adler32 checksum = new Adler32();
-			checksum.update(this.data, 12, this.data.length - 12);
-			header.checksum = (int) checksum.getValue(); // 计算checksum
-		} catch (NoSuchAlgorithmException e) {
-			System.out.println("[*E]" + "rebuild" + ":" + e.getMessage());
-		} catch (CursorMoveException e) {
-			System.out.println("[*E]" + "rebuild" + ":" + e.getMessage());
+		} catch (CursorMoveException e1) {
+			System.out.println("[*E]" + "rebuild" + ":" + e1.getMessage());
 		}
+		DexHeader header = dexFile.getHeader();
 		this.changeData(header.magic);
 		this.changeInt(header.checksum);
 		this.changeData(header.signature);
@@ -282,6 +272,23 @@ public class DexChanger extends FileChange {
 		this.changeInt(header.class_defs_off);
 		this.changeInt(header.data_size);
 		this.changeInt(header.data_off);
+		super.flush(); // 先将修改的数据flush,否则this.data还是旧数据
+		try {
+			MessageDigest mdTemp = MessageDigest.getInstance("SHA1");
+			mdTemp.update(this.data, 32, this.data.length - 32);
+			header.signature = mdTemp.digest(); // 计算Signature
+			System.arraycopy(header.signature, 0, this.data, 12, 20); // 覆盖原Signature
+			Adler32 checksum = new Adler32();
+			checksum.update(this.data, 12, this.data.length - 12);
+			header.checksum = (int) checksum.getValue(); // 计算checksum
+			this.move(8);
+		} catch (NoSuchAlgorithmException e) {
+			System.out.println("[*E]" + "rebuild" + ":" + e.getMessage());
+		} catch (CursorMoveException e) {
+			System.out.println("[*E]" + "rebuild" + ":" + e.getMessage());
+		}
+		this.changeInt(header.checksum);
+		this.changeData(header.signature);
 		super.flush();
 	}
 }

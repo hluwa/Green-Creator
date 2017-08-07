@@ -23,10 +23,16 @@ public class test {
 			CursorMoveException, IllegalAccessException, IllegalArgumentException, InvocationTargetException,
 			NoSuchMethodException, SecurityException, InstantiationException, NonStandardLeb128Exception {
 
-		String path = "C:\\Users\\huluwa\\Desktop\\classes.dex";
+		String path = "C:\\Users\\huluwa\\Desktop\\classes2.dex";
 		DexChanger changer = new DexChanger(new File(path));
-
 		DexFile dexfile = changer.getDexFile();
+		String magiclist[] = {
+				"com.google.android.gms.ads.AdView.loadAd",
+				"com.google.android.gms.ads.InterstitialAd.loadAd",
+				"com.google.android.gms.ads.reward.RewardedVideoAd.loadAd",
+				"com.mopub.mobileads.AdViewController.loadAd",
+				"com.mopub.mobileads.MoPubInterstitial$MoPubInterstitialView.loadAd"
+		};
 		for (insns_item insns : dexfile.getAllInsnsItem()) {
 			if (insns.opcode.toString().startsWith("INVOKE")) {
 
@@ -37,11 +43,15 @@ public class test {
 					continue;// 调用的索引有可能是FFFFFE,防止其他意外情况,过滤掉非正常methodId
 				}
 				String mtd = dexfile.getNameByMethodId(methodId);
-				if (mtd.indexOf("loadAd") != -1) {
-					changer.setNop(insns);
-					System.out.println(insns.getFileOff() + " - invoke method " + mtd);
+//				if(mtd.indexOf("loadAd") != -1) {
+//					System.out.println(mtd);
+//				}
+				for(String magic : magiclist) {
+					if(mtd.indexOf(magic) != -1) {
+						changer.setNop(insns);
+						System.out.println(insns.getFileOff() + " - invoke method " + mtd);
+					}
 				}
-
 			}
 		}
 		changer.flush();
