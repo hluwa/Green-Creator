@@ -3,12 +3,12 @@ package huluwa.dexparser.format;
 import huluwa.dexparser.Exception.NonStandardLeb128Exception;
 import huluwa.dexparser.Exception.QueryNextDataException;
 import huluwa.dexparser.base.Item;
-import huluwa.dexparser.type.Leb128;
+import huluwa.dexparser.type.uLeb128;
 
 public class String_Data_Item extends Item {
 	private static String itemName = "String_Data";
 
-	public Leb128 length;
+	public uLeb128 length;
 	public byte body[];
 
 	public String_Data_Item(byte[] data, int off) throws QueryNextDataException, NonStandardLeb128Exception {

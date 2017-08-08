@@ -7,16 +7,16 @@ import huluwa.dexparser.Exception.CursorMoveException;
 import huluwa.dexparser.Exception.NonStandardLeb128Exception;
 import huluwa.dexparser.Exception.QueryNextDataException;
 import huluwa.dexparser.base.Item;
-import huluwa.dexparser.type.Leb128;
+import huluwa.dexparser.type.uLeb128;
 import huluwa.dexparser.type.TypeCast;
 
 public class Class_Data extends Item {
 	public static final String itemName = "Class_Data";
 
-	public Leb128 static_fields_size;
-	public Leb128 instance_fields_size;
-	public Leb128 direct_methods_size;
-	public Leb128 virtual_methods_size;
+	public uLeb128 static_fields_size;
+	public uLeb128 instance_fields_size;
+	public uLeb128 direct_methods_size;
+	public uLeb128 virtual_methods_size;
 	public List<encoded_field> static_fields;
 	public List<encoded_field> instance_fields;
 	public List<encoded_method> direct_methods;

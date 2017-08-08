@@ -2,7 +2,7 @@ package huluwa.dexparser.tool;
 
 import java.util.ArrayList;
 
-import huluwa.dexparser.type.Leb128;
+import huluwa.dexparser.type.uLeb128;
 import huluwa.dexparser.type.TypeCast;
 
 public class ByteInserter extends ByteCursor {
@@ -34,7 +34,7 @@ public class ByteInserter extends ByteCursor {
 		instData(new TypeCast(val, tag).toBytes());
 	}
 
-	public void instLeb128(Leb128 val) {
+	public void instLeb128(uLeb128 val) {
 		instData(new TypeCast(val).toBytes());
 	}
 

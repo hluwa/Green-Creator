@@ -3,15 +3,15 @@ package huluwa.dexparser.format;
 import huluwa.dexparser.Exception.NonStandardLeb128Exception;
 import huluwa.dexparser.Exception.QueryNextDataException;
 import huluwa.dexparser.base.Item;
-import huluwa.dexparser.type.Leb128;
+import huluwa.dexparser.type.uLeb128;
 
 public class encoded_method extends Item {
 
 	public static final String itemName = "encoded_method";
-	public Leb128 method_id;
+	public uLeb128 method_id;
 	public int real_id;
-	public Leb128 access_flags;
-	public Leb128 code_off;
+	public uLeb128 access_flags;
+	public uLeb128 code_off;
 
 	public Code_Item code;
 

@@ -1,9 +1,9 @@
 package huluwa.dexparser.type;
 
-public class Leb128 {
+public class sLeb128 {
 	private byte data[];
 
-	public static Leb128 Create(int value) {
+	public static sLeb128 Create(int value) {
 		byte dest[] = new byte[5];
 		int poc = 0;
 		while (value != 0) {
@@ -12,13 +12,17 @@ public class Leb128 {
 		}
 		if (poc > 0) {
 			dest[poc - 1] &= 0x7F;
+			if(value > 0) {
+				dest[poc - 1] &= 0x3F;
+			}
 		}
+		
 		byte data[] = new byte[poc];
 		System.arraycopy(dest, 0, data, 0, poc);
-		return new Leb128(data);
+		return new sLeb128(data);
 	}
 
-	public Leb128(byte data[]) {
+	public sLeb128(byte data[]) {
 		this.data = GetLeb128(data);
 	}
 

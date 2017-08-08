@@ -23,13 +23,14 @@ public class GreenCreator {
 			CursorMoveException, IllegalAccessException, IllegalArgumentException, InvocationTargetException,
 			NoSuchMethodException, SecurityException, InstantiationException, NonStandardLeb128Exception {
 
-		String path = "C:\\Users\\huluwa\\Desktop\\classes2.dex";
+		String path = "C:\\Users\\huluwa\\Desktop\\classes.dex";
 		DexChanger changer = new DexChanger(new File(path));
 		DexFile dexfile = changer.getDexFile();
 		String magiclist[] = {
 				"com.google.android.gms.ads.AdView.loadAd",
 				"com.google.android.gms.ads.InterstitialAd.loadAd",
 				"com.google.android.gms.ads.reward.RewardedVideoAd.loadAd",
+				"com.google.android.gms.ads.NativeExpressAdView.loadAd",
 				"com.mopub.mobileads.AdViewController.loadAd",
 				"com.mopub.mobileads.MoPubInterstitial$MoPubInterstitialView.loadAd"
 		};

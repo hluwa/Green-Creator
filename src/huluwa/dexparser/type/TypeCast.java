@@ -9,7 +9,7 @@ public class TypeCast {
 
 	private int ival;
 	private short sval;
-	private Leb128 lval;
+	private uLeb128 lval;
 
 	public TypeCast(byte data[]) {
 		this(data, ENDIAN_CONSTANT);
@@ -56,7 +56,7 @@ public class TypeCast {
 		this.sval = sval;
 	}
 
-	public TypeCast(Leb128 lval) {
+	public TypeCast(uLeb128 lval) {
 		this.data = lval.getData();
 		this.lval = lval;
 	}
@@ -87,11 +87,11 @@ public class TypeCast {
 		return this.sval;
 	}
 
-	public Leb128 toLeb128() {
+	public uLeb128 toLeb128() {
 		if (this.lval != null) {
 			return this.lval;
 		}
-		return new Leb128(this.data);
+		return uLeb128.Create(toInt());
 	}
 
 	public byte[] toBytes() {

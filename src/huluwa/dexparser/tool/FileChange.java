@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.RandomAccessFile;
 
-import huluwa.dexparser.type.Leb128;
+import huluwa.dexparser.type.uLeb128;
 import huluwa.dexparser.type.TypeCast;
 
 public class FileChange extends ByteInserter {
@@ -37,7 +37,7 @@ public class FileChange extends ByteInserter {
 		changeData(new TypeCast(val).toBytes());
 	}
 
-	public void changeLeb128(Leb128 val) {
+	public void changeLeb128(uLeb128 val) {
 		changeData(new TypeCast(val).toBytes());
 	}
 

@@ -7,7 +7,7 @@ import huluwa.dexparser.Exception.CursorMoveException;
 import huluwa.dexparser.Exception.NonStandardLeb128Exception;
 import huluwa.dexparser.Exception.QueryNextDataException;
 import huluwa.dexparser.base.Item;
-import huluwa.dexparser.type.Leb128;
+import huluwa.dexparser.type.uLeb128;
 
 public class Code_Item extends Item {
 	private static String itemName = "Code_Item";
@@ -65,7 +65,7 @@ public class Code_Item extends Item {
 					try_len += 2;
 				}
 				try_items = this.cursor.nextData(try_len);
-				Leb128 handle_size = this.cursor.nextLeb128();
+				uLeb128 handle_size = this.cursor.nextLeb128();
 				int handle_len = handle_size.getLength() + handle_size.toInt() * 5;
 				this.cursor.aboveMove(handle_size.getLength());
 				this.handle = this.cursor.nextData(handle_len);

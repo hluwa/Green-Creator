@@ -3,7 +3,7 @@ package huluwa.dexparser.tool;
 import huluwa.dexparser.Exception.CursorMoveException;
 import huluwa.dexparser.Exception.NonStandardLeb128Exception;
 import huluwa.dexparser.Exception.QueryNextDataException;
-import huluwa.dexparser.type.Leb128;
+import huluwa.dexparser.type.uLeb128;
 import huluwa.dexparser.type.TypeCast;
 
 public class ByteCursor {
@@ -68,7 +68,7 @@ public class ByteCursor {
 		return new TypeCast(buf).toShort();
 	}
 
-	public Leb128 nextLeb128() throws NonStandardLeb128Exception, QueryNextDataException {
+	public uLeb128 nextLeb128() throws NonStandardLeb128Exception, QueryNextDataException {
 		int i = 0;
 		while (getByte(this.position + i) >> 7 != 0) {
 			i++;

@@ -23,7 +23,7 @@ import huluwa.dexparser.format.String_Data_Item;
 import huluwa.dexparser.format.String_Id_Item;
 import huluwa.dexparser.format.encoded_method;
 import huluwa.dexparser.format.insns_item;
-import huluwa.dexparser.type.Leb128;
+import huluwa.dexparser.type.uLeb128;
 import huluwa.dexparser.type.TypeCast;
 
 public class DexChanger extends FileChange {
@@ -118,7 +118,7 @@ public class DexChanger extends FileChange {
 	public void ChangeEncodedMethodCode(encoded_method method,Code_Item code) throws CursorMoveException {
 		int result = addShort(code.registers_size);
 		this.move(method.getFileOff() + method.method_id.getLength() + method.access_flags.getLength());
-		this.changeLeb128(Leb128.Create(result));
+		this.changeLeb128(uLeb128.Create(result));
 		addShort(code.ins_size);
 		addShort(code.outs_size);
 		addShort(code.tries_size);
@@ -217,7 +217,7 @@ public class DexChanger extends FileChange {
 		return off;
 	}
 
-	public int addLeb128(Leb128 val) throws CursorMoveException {
+	public int addLeb128(uLeb128 val) throws CursorMoveException {
 		return addData(new TypeCast(val).toBytes());
 	}
 
