@@ -1,10 +1,2 @@
-虽然名字叫做DexChanger,
-
-然而表面上他是一个自动去广告的工具(Green Creator)，
-
-实际上他可以做很多事情(好吧暂时还有点鸡肋)..
-
-也许最后会变成DexRebuilder,但是我暂时没精力写^_^
-
-(手残删错了..重新上传下,并且加了几行代码)
-
+依赖于dex字节码特征的Android一键去广告。
+原理文章见：http://www.hluwa.cn/tools/202.html
