@@ -84,7 +84,6 @@ public class DexFile {
 	
 	public ArrayList<encoded_method> getAllEncodedMethod(){
 		ArrayList<encoded_method> all = new ArrayList<encoded_method>();
-		System.out.println("all class = " + class_def_list.size());
 		for (Class_Def_Item cls : class_def_list) {
 			if (cls.class_data == null) {
 				continue;

@@ -13,6 +13,11 @@ public class FileChange extends ByteInserter {
 	protected File file;
 
 	public FileChange(File file) throws IOException {
+		if(!file.exists()) 
+		{
+			System.out.println("File not found");
+			throw new IOException();
+		}
 		this.file = file;
 		RandomAccessFile rsf = new RandomAccessFile(this.file, "rw");
 		this.data = new byte[(int) rsf.length()];

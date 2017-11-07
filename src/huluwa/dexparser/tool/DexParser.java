@@ -63,6 +63,7 @@ public class DexParser {
 	public static DexFile ParseDex(File file){
 		if(!DexFile.isDexFile(file)) 
 		{
+			System.out.println("[Error] This file is not DexFile ");
 			return null;
 		}
 		DexFile dexFile = new DexFile();

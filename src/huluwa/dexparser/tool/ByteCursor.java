@@ -14,7 +14,6 @@ import huluwa.dexparser.type.TypeCast;
 public class ByteCursor {
 	protected byte data[];
 	protected int position = 0;
-	protected int length = -1;
 
 	public ByteCursor() {
 		super();
@@ -22,7 +21,6 @@ public class ByteCursor {
 
 	public ByteCursor(byte data[]) {
 		this.data = data;
-		this.length = data.length;
 	}
 	
 	public ByteCursor(File file) 
@@ -34,7 +32,6 @@ public class ByteCursor {
 			in.read(data);
 			in.close();
 			this.data = data;
-			this.length = data.length;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -58,8 +55,8 @@ public class ByteCursor {
 
 	public void belowMove(int index) {
 		int i = position + index;
-		if (i > length) {
-			position = length;
+		if (i > data.length) {
+			position = data.length;
 			return;
 		}
 		position = i;
@@ -70,7 +67,7 @@ public class ByteCursor {
 	}
 
 	public int getLength() {
-		return length;
+		return data.length;
 	}
 
 	public byte nextByte() {
@@ -91,7 +88,7 @@ public class ByteCursor {
 		int i = 0;
 		while (getByte(this.position + i) >> 7 != 0) {
 			i++;
-			if (this.position + i >= length || i >= 5) {
+			if (this.position + i >= data.length || i >= 5) {
 				return null;
 			}
 		}
@@ -113,7 +110,7 @@ public class ByteCursor {
 			return new byte[0];
 		}
 		int i = position + size;
-		if (i > length) {
+		if (i > data.length) {
 			return null;
 		}
 		byte d[] = new byte[size];
