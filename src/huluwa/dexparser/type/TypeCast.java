@@ -66,11 +66,49 @@ public class TypeCast {
 			return this.ival;
 		}
 		if (this.tag == ENDIAN_CONSTANT) {
-			this.ival = this.data[0] & 0xFF | (this.data[1] & 0xFF) << 8 | (this.data[2] & 0xFF) << 16
-					| (this.data[3] & 0xFF) << 24;
+			if(this.data.length >= 1) 
+			{
+				this.ival = this.data[0] & 0xFF;
+				if(this.data.length >= 2)
+				{
+					this.ival |=  (this.data[1] & 0xFF) << 8;
+					if(this.data.length >= 3)
+					{
+						this.ival |=  (this.data[2] & 0xFF) << 16;
+						if(this.data.length >= 4)
+						{
+							this.ival |=  (this.data[3] & 0xFF) << 24;
+						}
+					}
+					
+				}
+			}
+			else 
+			{
+				this.ival = 0;
+			}
 		} else {
-			this.ival = this.data[3] & 0xFF | (this.data[2] & 0xFF) << 8 | (this.data[1] & 0xFF) << 16
-					| (this.data[0] & 0xFF) << 24;
+			if(this.data.length == 1) 
+			{
+				this.ival = this.data[0] & 0xFF  << 24;
+			}
+			else if(this.data.length == 2) 
+			{
+				this.ival = this.data[0] & 0xFF << 24 | this.data[1] & 0xFF << 16;
+			}
+			else if(this.data.length == 3) 
+			{
+				this.ival = this.data[0] & 0xFF << 24 | this.data[1] & 0xFF << 16 | this.data[2] & 0xFF << 8;
+			}
+			else if(this.data.length >= 4) 
+			{
+
+				this.ival = this.data[0] & 0xFF << 24 | this.data[1] & 0xFF << 16 | this.data[2] & 0xFF << 8 | this.data[3] & 0xFF & 0xff;
+			}
+			else 
+			{
+				this.ival = 0;
+			}
 		}
 		return this.ival;
 	}
@@ -80,9 +118,32 @@ public class TypeCast {
 			return this.sval;
 		}
 		if (this.tag == ENDIAN_CONSTANT) {
-			this.sval = (short) (this.data[0] & 0xFF | (this.data[1] & 0xFF) << 8);
+			if(this.data.length >= 1) 
+			{
+				this.sval = (short) (this.data[0] & 0xFF);
+				if(this.data.length >= 2) 
+				{
+					this.sval |= (this.data[1] & 0xFF) << 8;
+				}
+			}
+			else 
+			{
+				this.sval = 0;
+			}
 		} else {
-			this.sval = (short) (this.data[1] & 0xFF | (this.data[0] & 0xFF) << 8);
+			if(this.data.length == 1) 
+			{
+				this.sval = (short) (this.data[0] & 0xFF << 8);
+			}
+			else if(this.data.length >= 2) 
+			{
+				this.sval = (short) (this.data[1] & 0xFF | (this.data[0] & 0xFF) << 8);
+			}
+			else 
+			{
+				this.sval = 0;
+			}
+			
 		}
 		return this.sval;
 	}
@@ -91,7 +152,8 @@ public class TypeCast {
 		if (this.lval != null) {
 			return this.lval;
 		}
-		return uLeb128.Create(toInt());
+		return new uLeb128(this.data);
+//		return uLeb128.Create(toInt());
 	}
 
 	public byte[] toBytes() {

@@ -13,12 +13,21 @@ public class uLeb128 {
 		if (poc > 0) {
 			dest[poc - 1] &= 0x7F;
 		}
+		else if(poc == 0) 
+		{
+			poc++;
+		}
 		byte data[] = new byte[poc];
 		System.arraycopy(dest, 0, data, 0, poc);
 		return new uLeb128(data);
 	}
+	
 
 	public uLeb128(byte data[]) {
+		if(data == null || data.length < 1) {
+			this.data = new byte[0];
+			return;
+		}
 		this.data = GetLeb128(data);
 	}
 
@@ -31,7 +40,6 @@ public class uLeb128 {
 		}
 		return val;
 	}
-
 	public byte[] getData() {
 		return this.data;
 	}
@@ -50,6 +58,7 @@ public class uLeb128 {
 	}
 
 	public int getLength() {
+//		System.out.println("[Parser] leb128 len = " + data.length);
 		return data.length;
 	}
 

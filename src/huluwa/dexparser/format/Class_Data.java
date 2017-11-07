@@ -47,67 +47,56 @@ public class Class_Data extends Item {
 	}
 
 	@Override
-	public String getName() {
-		return itemName;
-	}
-
-	@Override
-	public void parseData() throws QueryNextDataException {
+	public void parseData() {
 		static_fields = new ArrayList<encoded_field>();
 		instance_fields = new ArrayList<encoded_field>();
 		direct_methods = new ArrayList<encoded_method>();
 		virtual_methods = new ArrayList<encoded_method>();
-		try {
-			this.static_fields_size = cursor.nextLeb128();
-			this.instance_fields_size = cursor.nextLeb128();
-			this.direct_methods_size = cursor.nextLeb128();
-			this.virtual_methods_size = cursor.nextLeb128();
+		this.static_fields_size = cursor.nextLeb128();
+		this.instance_fields_size = cursor.nextLeb128();
+		this.direct_methods_size = cursor.nextLeb128();
+		this.virtual_methods_size = cursor.nextLeb128();
 
-			for (int i = 0; i < static_fields_size.toInt(); i++) {
-				encoded_field field = new encoded_field(this.cursor.getBytes(), this.cursor.getPos());
-				this.cursor.belowMove(field.getLength());
-				if(i != 0) {
-					field.real_id = this.static_fields.get(i - 1).real_id + field.field_id.toInt();
-				}else {
-					field.real_id =field.field_id.toInt();
-				}
-				this.static_fields.add(field);
-				
+		for (int i = 0; i < static_fields_size.toInt(); i++) {
+			encoded_field field = new encoded_field(this.cursor.getBytes(), this.cursor.getPos());
+			this.cursor.belowMove(field.getLength());
+			if (i != 0) {
+				field.real_id = this.static_fields.get(i - 1).real_id + field.field_id.toInt();
+			} else {
+				field.real_id = field.field_id.toInt();
 			}
-			for (int i = 0; i < instance_fields_size.toInt(); i++) {
-				encoded_field field = new encoded_field(this.cursor.getBytes(), this.cursor.getPos());
-				this.cursor.belowMove(field.getLength());
-				if(i != 0) {
-					field.real_id = this.instance_fields.get(i - 1).real_id + field.field_id.toInt();
-				}else {
-					field.real_id =field.field_id.toInt();
-				}
-				this.instance_fields.add(field);
+			this.static_fields.add(field);
+
+		}
+		for (int i = 0; i < instance_fields_size.toInt(); i++) {
+			encoded_field field = new encoded_field(this.cursor.getBytes(), this.cursor.getPos());
+			this.cursor.belowMove(field.getLength());
+			if (i != 0) {
+				field.real_id = this.instance_fields.get(i - 1).real_id + field.field_id.toInt();
+			} else {
+				field.real_id = field.field_id.toInt();
 			}
-			for (int i = 0; i < direct_methods_size.toInt(); i++) {
-				encoded_method method = new encoded_method(this.cursor.getBytes(), this.cursor.getPos());
-				this.cursor.belowMove(method.getLength());
-				if(i != 0) {
-					method.real_id = this.direct_methods.get(i - 1).real_id + method.method_id.toInt();
-				}else {
-					method.real_id = method.method_id.toInt();
-				}
-				this.direct_methods.add(method);
+			this.instance_fields.add(field);
+		}
+		for (int i = 0; i < direct_methods_size.toInt(); i++) {
+			encoded_method method = new encoded_method(this.cursor.getBytes(), this.cursor.getPos());
+			this.cursor.belowMove(method.getLength());
+			if (i != 0) {
+				method.real_id = this.direct_methods.get(i - 1).real_id + method.method_id.toInt();
+			} else {
+				method.real_id = method.method_id.toInt();
 			}
-			for (int i = 0; i < virtual_methods_size.toInt(); i++) {
-				encoded_method method = new encoded_method(this.cursor.getBytes(), this.cursor.getPos());
-				this.cursor.belowMove(method.getLength());
-				if(i != 0) {
-					method.real_id = this.virtual_methods.get(i - 1).real_id + method.method_id.toInt();
-				}else {
-					method.real_id = method.method_id.toInt();
-				}
-				this.virtual_methods.add(method);
+			this.direct_methods.add(method);
+		}
+		for (int i = 0; i < virtual_methods_size.toInt(); i++) {
+			encoded_method method = new encoded_method(this.cursor.getBytes(), this.cursor.getPos());
+			this.cursor.belowMove(method.getLength());
+			if (i != 0) {
+				method.real_id = this.virtual_methods.get(i - 1).real_id + method.method_id.toInt();
+			} else {
+				method.real_id = method.method_id.toInt();
 			}
-		} catch (NonStandardLeb128Exception e) {
-			System.out.println("[*E]" + getName() + ":" + e.getMessage());
-		} catch (CursorMoveException e) {
-			System.out.println("[*E]" + getName() + ":" + e.getMessage());
+			this.virtual_methods.add(method);
 		}
 
 	}

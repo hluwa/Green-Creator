@@ -2,6 +2,7 @@ package huluwa.dexparser.tool;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Constructor;
@@ -31,46 +32,54 @@ public class DexParser {
 	private ByteCursor cursor;
 	private DexFile dexFile;
 
-	public DexParser(File dexfile) throws NonDexFileException, IOException {
-		this(new DexFile(dexfile));
+	public DexParser(File dexfile){
+		this(ParseDex(dexfile));
 	}
 
-	public DexParser(DexFile dexfile) throws NonDexFileException, IOException {
-		if (!dexfile.isDexFile()) {
-			throw new NonDexFileException(dexfile.getFile().getAbsolutePath());
-		}
+	public DexParser(DexFile dexfile) {
 		this.dexFile = dexfile;
-		InputStream in = new FileInputStream(dexfile.getFile());
-		byte[] data = new byte[in.available()];
-		in.read(data);
-		in.close();
-		this.cursor = new ByteCursor(data);
-	}
-
-	public DexParser(byte data[]) {
-		this(new ByteCursor(data));
-	}
-
-	public DexParser(ByteCursor cursor) {
-		this.cursor = cursor;
-		this.dexFile = new DexFile();
-	}
-
-	public DexFile parseDex() throws IOException, NonDexFileException, QueryNextDataException, CursorMoveException,
-			NonSameItemLengthException, IllegalAccessException, IllegalArgumentException, InvocationTargetException,
-			NoSuchMethodException, SecurityException, InstantiationException, NonStandardLeb128Exception {
-		parseHeader();
-		parseMap();
-		parseItems();
-		if (dexFile.getHeader().link_off != 0 && dexFile.getHeader().link_size != 0) {
-			this.cursor.move(dexFile.getHeader().link_off);
-			this.dexFile.link_data = this.cursor.nextData(dexFile.getHeader().link_size);
+		InputStream in;
+		try {
+			in = new FileInputStream(dexfile.getFile());
+			byte[] data = new byte[in.available()];
+			in.read(data);
+			in.close();
+			this.cursor = new ByteCursor(data);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		return this.dexFile;
 	}
 
-	public DexHeader parseHeader() throws IOException, NonDexFileException, QueryNextDataException {
-		if (dexFile.getHeader() == null) {
+//	public DexParser(byte data[]) {
+//		this(new ByteCursor(data));
+//	}
+//
+//	public DexParser(ByteCursor cursor) {
+//		this.cursor = cursor;
+//		this.dexFile = new DexFile();
+//	}
+
+	
+	public static DexFile ParseDex(File file){
+		if(!DexFile.isDexFile(file)) 
+		{
+			return null;
+		}
+		DexFile dexFile = new DexFile();
+		ByteCursor cursor = new ByteCursor(file);
+		DexHeader header = ParseHeader(cursor);
+		dexFile.setHeader(header);
+		MapList maplist = ParseMap(header,cursor);
+		dexFile.setMap_list(maplist);
+		ParseItems(dexFile,cursor);
+		if (header.link_off != 0 && header.link_size != 0) {
+			cursor.move(header.link_off);
+			dexFile.link_data = cursor.nextData(header.link_size);
+		}
+		return dexFile;
+	}
+
+	private static DexHeader ParseHeader(ByteCursor cursor){
 			DexHeader header = new DexHeader();
 			header.magic = cursor.nextString();
 			header.checksum = cursor.nextInt();
@@ -96,40 +105,27 @@ public class DexParser {
 			header.data_size = cursor.nextInt();
 			header.data_off = cursor.nextInt();
 			header.otherData = cursor.nextData(header.header_size - 0x70);
-			dexFile.setHeader(header);
-		}
-		return dexFile.getHeader();
+		return header;
 	}
 
-	public MapList parseMap() throws CursorMoveException, QueryNextDataException, NonSameItemLengthException,
-			IOException, NonDexFileException {
-		if (dexFile.getHeader() == null) {
-			parseHeader();
+	public static MapList ParseMap(DexHeader header,ByteCursor cursor){
+		if (header== null) {
+			return null;
 		}
-		if (dexFile.getMap_list() == null) {
-			cursor.move(dexFile.getHeader().map_off);
-			int size = cursor.nextInt();
-			MapList map = new MapList(size);
-			for (int i = 0; i < size; i++) {
-				int file_off = cursor.position;
-				Map_Item item = new Map_Item(cursor.getBytes(), file_off);
-				map.map_list.add(item);
-				this.cursor.belowMove(item.getLength());
-			}
-			dexFile.setMap_list(map);
+		cursor.move(header.map_off);
+		int size = cursor.nextInt();
+		MapList map = new MapList(size);
+		for (int i = 0; i < size; i++) {
+			int file_off = cursor.position;
+			Map_Item item = new Map_Item(cursor.getBytes(), file_off);
+			map.map_list.add(item);
+			cursor.belowMove(item.getLength());
 		}
-		return dexFile.getMap_list();
+		return map;
 	}
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public void parseItems()
-			throws CursorMoveException, QueryNextDataException, NonSameItemLengthException, IOException,
-			NonDexFileException, IllegalAccessException, IllegalArgumentException, InvocationTargetException,
-			NoSuchMethodException, SecurityException, InstantiationException, NonStandardLeb128Exception {
-		if (dexFile.getMap_list() == null) {
-			parseMap();
-		}
-		MapList map = dexFile.getMap_list();
+	public static void ParseItems(DexFile dexfile,ByteCursor cursor){
+		MapList map = dexfile.getMap_list();
 		int i = 0;
 		while (i < map.getSize()) {
 			Map_Item mapitem = map.map_list.get(i);
@@ -139,70 +135,91 @@ public class DexParser {
 			switch (mapitem.type) {
 			case Map_Item.STRING_ID_MAP:
 				itemlist = new ItemList<String_Id_Item>(String_Id_Item.class);
-				dexFile.setString_id_list(itemlist);
+				dexfile.setString_id_list(itemlist);
 				break;
 			case Map_Item.TYPE_ID_MAP:
 				itemlist = new ItemList<Type_Id_Item>(Type_Id_Item.class);
-				dexFile.setType_id_list(itemlist);
+				dexfile.setType_id_list(itemlist);
 				break;
 			case Map_Item.PROTO_ID_MAP:
 				itemlist = new ItemList<Proto_Id_Item>(Proto_Id_Item.class);
-				dexFile.setProto_id_list(itemlist);
+				dexfile.setProto_id_list(itemlist);
 				break;
 			case Map_Item.FIELD_ID_MAP:
 				itemlist = new ItemList<Field_Id_Item>(Field_Id_Item.class);
-				dexFile.setField_id_list(itemlist);
+				dexfile.setField_id_list(itemlist);
 				break;
 			case Map_Item.METHOD_ID_MAP:
 				itemlist = new ItemList<Method_Id_Item>(Method_Id_Item.class);
-				dexFile.setMethod_id_list(itemlist);
+				dexfile.setMethod_id_list(itemlist);
 				break;
 			case Map_Item.CLASS_DEF_MAP:
 				itemlist = new ItemList<Class_Def_Item>(Class_Def_Item.class);
-				dexFile.setClass_def_list(itemlist);
+				dexfile.setClass_def_list(itemlist);
 				break;
 			case Map_Item.STRING_DATA_MAP:
 				datalist = new ItemList<String_Data_Item>(String_Data_Item.class);
-				this.cursor.move(mapitem.offset);
-				fristoff = this.cursor.position;
+				cursor.move(mapitem.offset);
+				fristoff = cursor.position;
 				for (int pos = 0; pos < mapitem.size; pos++) {
-					String_Data_Item item = new String_Data_Item(this.cursor.getBytes(), this.cursor.position);
+					String_Data_Item item = new String_Data_Item(cursor.getBytes(), cursor.position);
 					datalist.add(item);
-					this.cursor.belowMove(item.getLength());
+					cursor.belowMove(item.getLength());
 				}
 				datalist.setStartOff(fristoff);
-				datalist.setEndOff(this.cursor.position);
-				datalist.setAllLength(this.cursor.position - fristoff);
-				dexFile.setString_data_list(datalist);
+				datalist.setEndOff(cursor.position);
+				datalist.setAllLength(cursor.position - fristoff);
+				dexfile.setString_data_list(datalist);
 				break;
 			case Map_Item.TYPE_LIST_MAP:
 				datalist = new ItemList<Type_List_Item>(Type_List_Item.class);
-				this.cursor.move(mapitem.offset);
-				fristoff = this.cursor.position;
+				cursor.move(mapitem.offset);
+				fristoff = cursor.position;
 				for (int pos = 0; pos < mapitem.size; pos++) {
-					int off = this.cursor.position;
-					Type_List_Item item = new Type_List_Item(this.cursor.getBytes(), off);
+					int off = cursor.position;
+					Type_List_Item item = new Type_List_Item(cursor.getBytes(), off);
 					datalist.add(item);
-					this.cursor.belowMove(item.getLength());
+					cursor.belowMove(item.getLength());
 				}
 				datalist.setStartOff(fristoff);
-				datalist.setEndOff(this.cursor.position);
-				datalist.setAllLength(this.cursor.position - fristoff);
-				dexFile.setType_list_list(datalist);
+				datalist.setEndOff(cursor.position);
+				datalist.setAllLength(cursor.position - fristoff);
+				dexfile.setType_list_list(datalist);
 			}
 			if (itemlist != null) {
-				this.cursor.move(mapitem.offset);
-				fristoff = this.cursor.position;
+				cursor.move(mapitem.offset);
+				fristoff = cursor.position;
 				int pos = 0;
 				while (pos++ < mapitem.size) {
-					Constructor constructor = itemlist.itemType.getConstructor(byte[].class, int.class);
-					Item item = (Item) (constructor.newInstance(this.cursor.getBytes(), this.cursor.position));
-					itemlist.add(item);
-					this.cursor.belowMove(item.getLength());
+					Constructor constructor;
+					try {
+						constructor = itemlist.itemType.getConstructor(byte[].class, int.class);
+						Item item = (Item) (constructor.newInstance(cursor.getBytes(), cursor.position));
+						itemlist.add(item);
+						cursor.belowMove(item.getLength());
+					} catch (NoSuchMethodException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (SecurityException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (InstantiationException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IllegalAccessException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IllegalArgumentException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (InvocationTargetException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 				itemlist.setStartOff(fristoff);
-				itemlist.setEndOff(this.cursor.position);
-				itemlist.setAllLength(this.cursor.position - fristoff);
+				itemlist.setEndOff(cursor.position);
+				itemlist.setAllLength(cursor.position - fristoff);
 			}
 			i++;
 		}

@@ -2,6 +2,7 @@ package huluwa.dexparser.format;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -43,23 +44,30 @@ public class DexFile {
 		return null;
 	}
 
-	public boolean isDexFile() throws IOException {
+	public static boolean isDexFile(File file){
 		if (file == null) {
 			return false;
 		}
-		InputStream in = new FileInputStream(file);
-		if (in.available() < 4) {
-			in.close();
-			return false;
-		}
-		if (in.read() != 0x64 || in.read() != 0x65 || in.read() != 0x78 || in.read() != 0x0A) {
+		InputStream in;
+		try {
+			in = new FileInputStream(file);
+			if (in.available() < 4) {
+				in.close();
+				return false;
+			}
+			if (in.read() != 0x64 || in.read() != 0x65 || in.read() != 0x78 || in.read() != 0x0A) {
+				in.close();
+				in = null;
+				return false;
+			}
 			in.close();
 			in = null;
-			return false;
+			return true;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		in.close();
-		in = null;
-		return true;
+		return false;
 
 	}
 
@@ -76,6 +84,7 @@ public class DexFile {
 	
 	public ArrayList<encoded_method> getAllEncodedMethod(){
 		ArrayList<encoded_method> all = new ArrayList<encoded_method>();
+		System.out.println("all class = " + class_def_list.size());
 		for (Class_Def_Item cls : class_def_list) {
 			if (cls.class_data == null) {
 				continue;

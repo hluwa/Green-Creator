@@ -21,19 +21,9 @@ public class encoded_field extends Item {
 	}
 
 	@Override
-	public String getName() {
-		return itemName;
-	}
-
-	@Override
-	public void parseData() throws QueryNextDataException {
-		try {
-			this.field_id = this.cursor.nextLeb128();
-			this.access_flags = this.cursor.nextLeb128();
-		} catch (NonStandardLeb128Exception e) {
-			// TODO Auto-generated catch block
-			System.out.println("[*E]" + getName() + ":" + e.getMessage());
-		}
+	public void parseData() {
+		this.field_id = this.cursor.nextLeb128();
+		this.access_flags = this.cursor.nextLeb128();
 	}
 
 }

@@ -20,12 +20,9 @@ public class Method_Id_Item extends Item {
 		return length;
 	}
 
-	public String getName() {
-		return itemName;
-	}
 
 	@Override
-	public void parseData() throws QueryNextDataException {
+	public void parseData() {
 		// TODO Auto-generated method stub
 		class_id = cursor.nextShort();
 		proto_id = cursor.nextShort();

@@ -25,19 +25,10 @@ public class encoded_method extends Item {
 	}
 
 	@Override
-	public String getName() {
-		return itemName;
-	}
-
-	@Override
-	public void parseData() throws QueryNextDataException {
-		try {
-			this.method_id = this.cursor.nextLeb128();
-			this.access_flags = this.cursor.nextLeb128();
-			this.code_off = this.cursor.nextLeb128();
-		} catch (NonStandardLeb128Exception e) {
-			System.out.println("[*E]" + getName() + ":" + e.getMessage());
-		}
+	public void parseData() {
+		this.method_id = this.cursor.nextLeb128();
+		this.access_flags = this.cursor.nextLeb128();
+		this.code_off = this.cursor.nextLeb128();
 		if (code_off.toInt() != 0) {
 			this.code = new Code_Item(this.cursor.getBytes(), code_off.toInt());
 		}

@@ -13,8 +13,7 @@ public class Type_List_Item extends Item {
 	public int size;
 	public short type_ids[];
 
-	public Type_List_Item(byte[] data, int off)
-			throws QueryNextDataException, UnsupportedEncodingException, NonStandardLeb128Exception {
+	public Type_List_Item(byte[] data, int off){
 		super(data, off);
 
 	}
@@ -28,7 +27,7 @@ public class Type_List_Item extends Item {
 	}
 
 	@Override
-	public void parseData() throws QueryNextDataException {
+	public void parseData() {
 
 		size = cursor.nextInt();
 		if (size % 2 != 0) {

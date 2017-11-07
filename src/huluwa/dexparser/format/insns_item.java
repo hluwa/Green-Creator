@@ -21,20 +21,11 @@ public class insns_item extends Item {
 	}
 
 	@Override
-	public String getName() {
-		return itemName;
-	}
-
-	@Override
-	public void parseData() throws QueryNextDataException {
+	public void parseData() {
 		int b = this.cursor.nextByte() & 0xFF;
 
 		opcode = OpCode.values()[b];
-		try {
-			this.cursor.aboveMove(1);
-		} catch (CursorMoveException e) {
-			System.out.println("[*E]" + getName() + ":" + e.getMessage());
-		}
+		this.cursor.aboveMove(1);
 		data = this.cursor.nextData(opcode.length);
 	}
 }

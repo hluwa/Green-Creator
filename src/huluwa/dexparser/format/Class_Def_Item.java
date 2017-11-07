@@ -32,7 +32,7 @@ public class Class_Def_Item extends Item {
 	}
 
 	@Override
-	public void parseData() throws QueryNextDataException {
+	public void parseData(){
 		class_id = this.cursor.nextInt();
 		access_flags = this.cursor.nextInt();
 		superclass_id = this.cursor.nextInt();

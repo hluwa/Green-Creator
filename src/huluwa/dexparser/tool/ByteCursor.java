@@ -1,5 +1,10 @@
 package huluwa.dexparser.tool;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
 import huluwa.dexparser.Exception.CursorMoveException;
 import huluwa.dexparser.Exception.NonStandardLeb128Exception;
 import huluwa.dexparser.Exception.QueryNextDataException;
@@ -17,28 +22,45 @@ public class ByteCursor {
 
 	public ByteCursor(byte data[]) {
 		this.data = data;
-		getLength();
+		this.length = data.length;
+	}
+	
+	public ByteCursor(File file) 
+	{
+		InputStream in;
+		try {
+			in = new FileInputStream(file);
+			byte[] data = new byte[in.available()];
+			in.read(data);
+			in.close();
+			this.data = data;
+			this.length = data.length;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
-	public void move(int pos) throws CursorMoveException {
+	public void move(int pos){
 		// if(pos >= length){
 		// throw new CursorMoveException(length,pos);
 		// }
 		position = pos;
 	}
 
-	public void aboveMove(int index) throws CursorMoveException {
+	public void aboveMove(int index) {
 		int i = position - index;
 		if (i < 0) {
-			throw new CursorMoveException(length, i);
+			position = 0;
+			return;
 		}
 		position = i;
 	}
 
-	public void belowMove(int index) throws CursorMoveException {
+	public void belowMove(int index) {
 		int i = position + index;
 		if (i > length) {
-			throw new CursorMoveException(length, i);
+			position = length;
+			return;
 		}
 		position = i;
 	}
@@ -48,9 +70,6 @@ public class ByteCursor {
 	}
 
 	public int getLength() {
-		if (this.length == -1) {
-			this.length = data.length;
-		}
 		return length;
 	}
 
@@ -58,29 +77,29 @@ public class ByteCursor {
 		return data[position++];
 	}
 
-	public int nextInt() throws QueryNextDataException {
+	public int nextInt(){
 		byte buf[] = nextData(4);
 		return new TypeCast(buf).toInt();
 	}
 
-	public short nextShort() throws QueryNextDataException {
+	public short nextShort(){
 		byte buf[] = nextData(2);
 		return new TypeCast(buf).toShort();
 	}
 
-	public uLeb128 nextLeb128() throws NonStandardLeb128Exception, QueryNextDataException {
+	public uLeb128 nextLeb128(){
 		int i = 0;
 		while (getByte(this.position + i) >> 7 != 0) {
 			i++;
 			if (this.position + i >= length || i >= 5) {
-				throw new NonStandardLeb128Exception(data[this.position + i - 1], i);
+				return null;
 			}
 		}
 		byte d[] = nextData(i + 1);
 		return new TypeCast(d).toLeb128();
 	}
 
-	public byte[] nextString() throws QueryNextDataException {
+	public byte[] nextString(){
 		int length = 0;
 		while (getByte(this.position + length) != '\0') {
 			length++;
@@ -89,13 +108,13 @@ public class ByteCursor {
 		return b;
 	}
 
-	public byte[] nextData(int size) throws QueryNextDataException {
+	public byte[] nextData(int size){
 		if (size == 0) {
-			return null;
+			return new byte[0];
 		}
 		int i = position + size;
 		if (i > length) {
-			throw new QueryNextDataException(length, i);
+			return null;
 		}
 		byte d[] = new byte[size];
 		System.arraycopy(this.data, this.position, d, 0, size);

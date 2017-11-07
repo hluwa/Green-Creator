@@ -23,7 +23,7 @@ public class String_Id_Item extends Item {
 	}
 
 	@Override
-	public void parseData() throws QueryNextDataException {
+	public void parseData() {
 		this.data_off = cursor.nextInt();
 	}
 }

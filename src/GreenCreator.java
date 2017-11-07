@@ -18,10 +18,8 @@ import huluwa.dexparser.tool.DexChanger;
 import huluwa.dexparser.type.TypeCast;
 
 public class GreenCreator {
-	public static void main(String args[])
-			throws NonSameItemLengthException, IOException, NonDexFileException, QueryNextDataException,
-			CursorMoveException, IllegalAccessException, IllegalArgumentException, InvocationTargetException,
-			NoSuchMethodException, SecurityException, InstantiationException, NonStandardLeb128Exception {
+	public static void main(String args[]) throws IOException 
+	{
 
 		String path = "C:\\Users\\huluwa\\Desktop\\classes.dex";
 		DexChanger changer = new DexChanger(new File(path));
@@ -37,11 +35,11 @@ public class GreenCreator {
 		for (insns_item insns : dexfile.getAllInsnsItem()) {
 			if (insns.opcode.toString().startsWith("INVOKE")) {
 
-				changer.move(insns.getFileOff() + 2); // invoke系列指令格式 A|G|op BBBB F|E|D|C ,所以off + 2是methodId
-				int methodId = changer.nextShort() & 0xFFFF; // 转为无符号数
+				changer.move(insns.getFileOff() + 2); // invoke绯诲垪鎸囦护鏍煎紡 A|G|op BBBB F|E|D|C ,鎵�浠ff + 2鏄痬ethodId
+				int methodId = changer.nextShort() & 0xFFFF; // 杞负鏃犵鍙锋暟
 
 				if (methodId < 0 || methodId > dexfile.getHeader().method_ids_size) { // invoke-custom
-					continue;// 调用的索引有可能是FFFFFE,防止其他意外情况,过滤掉非正常methodId
+					continue;// 璋冪敤鐨勭储寮曟湁鍙兘鏄疐FFFFE,闃叉鍏朵粬鎰忓鎯呭喌,杩囨护鎺夐潪姝ｅ父methodId
 				}
 				String mtd = dexfile.getNameByMethodId(methodId);
 //				if(mtd.indexOf("loadAd") != -1) {
@@ -58,30 +56,4 @@ public class GreenCreator {
 		changer.flush();
 	}
 	
-//	测试无效.. 
-//	public static void addMyToast(String info,DexChanger changer) throws QueryNextDataException, NonStandardLeb128Exception, CursorMoveException {
-//		changer.changeString(6116, info);
-//		short makeText = changer.getDexFile().findMethod("android.widget.Toast.makeText(LLLI)");
-//		short show = changer.getDexFile().findMethod("android.widget.Toast.show(V)");
-//		if(makeText == -1 & show == -1) {
-//			System.out.println("很抱歉无法添加Toast,因为找不到这个方法,请手动添加。");
-//		}
-//		byte hexData[] = { 0x1A, 0x00, 0, 0, 0x12, 0x11, 0x71, 0x30, 0, 0, 0x0C, 0x01, 0x0C, 0x00, 0x6E, 0x10,0, 0, 0x00, 0x00};
-//		System.arraycopy(new TypeCast(makeText).toBytes(), 0, hexData, 8, 2);
-//		System.arraycopy(new TypeCast(show).toBytes(), 0, hexData, 16, 2);
-//		for(encoded_method method : changer.getDexFile().getAllEncodedMethod()) {
-//			String mtdName = changer.getDexFile().getNameByMethodId(method.real_id);
-//			if("com.dv.adm.Main.onCreate(VL)".equals(mtdName)) {
-//				//System.out.println(method.getFileOff());
-//				Code_Item code = method.code;
-//				int len = hexData.length + code.insns.length;
-//				byte insns[] = new byte[len];
-//				code.insns_size = insns.length / 2;
-//				System.arraycopy(hexData, 0, insns, 0, hexData.length);
-//				System.arraycopy(code.insns, 0, insns, hexData.length, code.insns.length);
-//				code.insns = insns;
-//				changer.ChangeEncodedMethodCode(method, code);
-//			}
-//		}
-//	}
 }

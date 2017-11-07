@@ -29,11 +29,9 @@ import huluwa.dexparser.type.TypeCast;
 public class DexChanger extends FileChange {
 	private DexFile dexFile;
 
-	public DexChanger(File file) throws IOException, IllegalArgumentException, SecurityException, NonDexFileException,
-			QueryNextDataException, CursorMoveException, NonSameItemLengthException, IllegalAccessException,
-			InvocationTargetException, NoSuchMethodException, InstantiationException, NonStandardLeb128Exception {
+	public DexChanger(File file) throws IOException {
 		super(file);
-		dexFile = new DexParser(file).parseDex();
+		dexFile = DexParser.ParseDex(file);
 	}
 
 	public DexChanger(DexFile dex) throws IOException {
@@ -49,19 +47,16 @@ public class DexChanger extends FileChange {
 		this.dexFile = dexFile;
 	}
 
+	
 	public void setNop(insns_item insns) {
-		setNop(insns.getFileOff(), insns.getLength());
+		setNop(insns.getFileOff(), insns.getLength()); 
 	}
 
 	public void setNop(int off, int num) {
-		try {
 			this.move(off);
 			for (int i = 0; i < num; i++) {
 				this.changeByte((byte) 0);
 			}
-		} catch (CursorMoveException e) {
-			e.printStackTrace();
-		}
 
 	}
 
@@ -189,6 +184,12 @@ public class DexChanger extends FileChange {
 		changeString(this.getDexFile().getType_id_list().get(cls.class_id).id, destName);
 	}
 
+	public void changeInt(int off,int value)
+	{
+			this.move(off);
+		this.changeInt(value);
+	}
+	
 	public void changeString(int id, String data)
 			throws QueryNextDataException, NonStandardLeb128Exception, CursorMoveException {
 		byte length[] = new TypeCast(data.length()).toLeb128().getData();
@@ -243,11 +244,7 @@ public class DexChanger extends FileChange {
 	}
 
 	public void flush() {
-		try {
-			this.move(0);
-		} catch (CursorMoveException e1) {
-			System.out.println("[*E]" + "rebuild" + ":" + e1.getMessage());
-		}
+		this.move(0);
 		DexHeader header = dexFile.getHeader();
 		this.changeData(header.magic);
 		this.changeInt(header.checksum);
@@ -283,8 +280,6 @@ public class DexChanger extends FileChange {
 			header.checksum = (int) checksum.getValue(); // ¼ÆËãchecksum
 			this.move(8);
 		} catch (NoSuchAlgorithmException e) {
-			System.out.println("[*E]" + "rebuild" + ":" + e.getMessage());
-		} catch (CursorMoveException e) {
 			System.out.println("[*E]" + "rebuild" + ":" + e.getMessage());
 		}
 		this.changeInt(header.checksum);

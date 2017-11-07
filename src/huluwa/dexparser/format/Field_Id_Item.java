@@ -24,7 +24,7 @@ public class Field_Id_Item extends Item {
 	}
 
 	@Override
-	public void parseData() throws QueryNextDataException {
+	public void parseData() {
 		class_id = cursor.nextShort();
 		type_id = cursor.nextShort();
 		name_id = cursor.nextInt();

@@ -11,12 +11,12 @@ public class String_Data_Item extends Item {
 	public uLeb128 length;
 	public byte body[];
 
-	public String_Data_Item(byte[] data, int off) throws QueryNextDataException, NonStandardLeb128Exception {
+	public String_Data_Item(byte[] data, int off){
 		super(data, off);
 	}
 
 	public int getLength() {
-		return length.getLength() + body.length;
+		return length.getLength() + body.length ;
 	}
 
 	public String getName() {
@@ -24,14 +24,10 @@ public class String_Data_Item extends Item {
 	}
 
 	@Override
-	public void parseData() throws QueryNextDataException {
-		try {
-			length = cursor.nextLeb128();
-		} catch (NonStandardLeb128Exception e) {
-			// TODO Auto-generated catch block
-			System.out.println("[*E]" + getName() + ":" + e.getMessage());
-		}
+	public void parseData(){
+		length = cursor.nextLeb128();
 		body = cursor.nextString();
+//		System.out.println("[Parser] new String[" + this.getFileOff() + ":" + length.toInt() + "] :" + toString());
 	}
 
 	@Override

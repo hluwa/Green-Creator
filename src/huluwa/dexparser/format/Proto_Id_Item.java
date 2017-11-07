@@ -20,12 +20,8 @@ public class Proto_Id_Item extends Item {
 		return length;
 	}
 
-	public String getName() {
-		return itemName;
-	}
-
 	@Override
-	public void parseData() throws QueryNextDataException {
+	public void parseData() {
 		shorty_id = cursor.nextInt();
 		return_type_id = cursor.nextInt();
 		params_off = cursor.nextInt();
