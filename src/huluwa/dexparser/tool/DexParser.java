@@ -181,6 +181,10 @@ public class DexParser {
 					Type_List_Item item = new Type_List_Item(cursor.getBytes(), off);
 					datalist.add(item);
 					cursor.belowMove(item.getLength());
+					if(item.size % 2 != 0) 
+					{
+						cursor.belowMove(2);
+					}
 				}
 				datalist.setStartOff(fristoff);
 				datalist.setEndOff(cursor.position);

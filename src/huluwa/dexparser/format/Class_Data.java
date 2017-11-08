@@ -52,10 +52,10 @@ public class Class_Data extends Item {
 		instance_fields = new ArrayList<encoded_field>();
 		direct_methods = new ArrayList<encoded_method>();
 		virtual_methods = new ArrayList<encoded_method>();
-		this.static_fields_size = cursor.nextLeb128();
-		this.instance_fields_size = cursor.nextLeb128();
-		this.direct_methods_size = cursor.nextLeb128();
-		this.virtual_methods_size = cursor.nextLeb128();
+		this.static_fields_size = cursor.nextuLeb128();
+		this.instance_fields_size = cursor.nextuLeb128();
+		this.direct_methods_size = cursor.nextuLeb128();
+		this.virtual_methods_size = cursor.nextuLeb128();
 
 		for (int i = 0; i < static_fields_size.toInt(); i++) {
 			encoded_field field = new encoded_field(this.cursor.getBytes(), this.cursor.getPos());

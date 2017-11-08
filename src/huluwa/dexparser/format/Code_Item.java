@@ -21,6 +21,8 @@ public class Code_Item extends Item {
 	public byte try_items[];
 	public byte handle[];
 	List<insns_item> insns_items;
+	
+	public debug_info_item debug_info;
 
 	public Code_Item(byte data[], int off) {
 		super(data, off);
@@ -59,10 +61,14 @@ public class Code_Item extends Item {
 				try_len += 2;
 			}
 			try_items = this.cursor.nextData(try_len);
-			uLeb128 handle_size = this.cursor.nextLeb128();
+			uLeb128 handle_size = this.cursor.nextuLeb128();
 			int handle_len = handle_size.getLength() + handle_size.toInt() * 5;
 			this.cursor.aboveMove(handle_size.getLength());
 			this.handle = this.cursor.nextData(handle_len);
+		}
+		if(debug_info_off != 0) 
+		{
+			debug_info = new debug_info_item(this.cursor.getBytes(),this.cursor.getPos());
 		}
 	}
 }

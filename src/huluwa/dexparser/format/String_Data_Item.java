@@ -25,7 +25,7 @@ public class String_Data_Item extends Item {
 
 	@Override
 	public void parseData(){
-		length = cursor.nextLeb128();
+		length = cursor.nextuLeb128();
 		body = cursor.nextString();
 //		System.out.println("[Parser] new String[" + this.getFileOff() + ":" + length.toInt() + "] :" + toString());
 	}

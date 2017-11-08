@@ -26,9 +26,9 @@ public class encoded_method extends Item {
 
 	@Override
 	public void parseData() {
-		this.method_id = this.cursor.nextLeb128();
-		this.access_flags = this.cursor.nextLeb128();
-		this.code_off = this.cursor.nextLeb128();
+		this.method_id = this.cursor.nextuLeb128();
+		this.access_flags = this.cursor.nextuLeb128();
+		this.code_off = this.cursor.nextuLeb128();
 		if (code_off.toInt() != 0) {
 			this.code = new Code_Item(this.cursor.getBytes(), code_off.toInt());
 		}

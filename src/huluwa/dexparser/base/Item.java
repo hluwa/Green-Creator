@@ -8,6 +8,7 @@ public abstract class Item {
 	protected int file_off;
 	protected ByteCursor cursor;
 
+
 	public Item(byte data[], int off) {
 		this.file_off = off;
 		cursor = new ByteCursor(data);

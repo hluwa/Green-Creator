@@ -8,7 +8,9 @@ import java.io.InputStream;
 import huluwa.dexparser.Exception.CursorMoveException;
 import huluwa.dexparser.Exception.NonStandardLeb128Exception;
 import huluwa.dexparser.Exception.QueryNextDataException;
+import huluwa.dexparser.format.encoded_value;
 import huluwa.dexparser.type.uLeb128;
+import huluwa.dexparser.type.uLeb128p1;
 import huluwa.dexparser.type.TypeCast;
 
 public class ByteCursor {
@@ -70,6 +72,13 @@ public class ByteCursor {
 		return data.length;
 	}
 
+	public encoded_value nextEncoeded_value()
+	{
+		encoded_value value = new encoded_value(this.getBytes(),this.position);
+		this.belowMove(value.getLength());
+		return value;
+	}
+	
 	public byte nextByte() {
 		return data[position++];
 	}
@@ -84,7 +93,7 @@ public class ByteCursor {
 		return new TypeCast(buf).toShort();
 	}
 
-	public uLeb128 nextLeb128(){
+	public uLeb128 nextuLeb128(){
 		int i = 0;
 		while (getByte(this.position + i) >> 7 != 0) {
 			i++;
@@ -95,7 +104,18 @@ public class ByteCursor {
 		byte d[] = nextData(i + 1);
 		return new TypeCast(d).toLeb128();
 	}
-
+	public uLeb128p1 nextuLeb128p1(){
+		int i = 0;
+		while (getByte(this.position + i) >> 7 != 0) {
+			i++;
+			if (this.position + i >= data.length || i >= 5) {
+				return null;
+			}
+		}
+		byte d[] = nextData(i + 1);
+		return new TypeCast(d).toLeb128p1();
+	}
+	
 	public byte[] nextString(){
 		int length = 0;
 		while (getByte(this.position + length) != '\0') {

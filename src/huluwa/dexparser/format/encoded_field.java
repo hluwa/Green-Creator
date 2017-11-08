@@ -14,7 +14,6 @@ public class encoded_field extends Item {
 	public encoded_field(byte[] data, int off) {
 		super(data, off);
 	}
-
 	@Override
 	public int getLength() {
 		return field_id.getLength() + access_flags.getLength();
@@ -22,8 +21,8 @@ public class encoded_field extends Item {
 
 	@Override
 	public void parseData() {
-		this.field_id = this.cursor.nextLeb128();
-		this.access_flags = this.cursor.nextLeb128();
+		this.field_id = this.cursor.nextuLeb128();
+		this.access_flags = this.cursor.nextuLeb128();
 	}
 
 }
