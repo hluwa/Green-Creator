@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="AndroidParser">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/out/artifacts/AndroidParser_jar/AndroidParser.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="AndroidParser:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/AndroidParser_jar</output-path>
+    <root id="archive" name="AndroidParser.jar">
+      <element id="module-output" name="Green-Creator" />
+    </root>
+  </artifact>
+</component>

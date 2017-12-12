@@ -1,0 +1,324 @@
+package hluwa.dex.base;
+
+public enum OpCode {
+
+	NOP(2), 
+	MOVE(2), 
+	MOVE_FROM16(4), 
+	MOVE_16(6), 
+	MOVE_WIDE(2), 
+	MOVE_WIDE_FROM16(4), 
+	MOVE_WIDE_16(6), 
+	MOVE_OBJECT(2), 
+	MOVE_OBJECT_FROM16(4), 
+	MOVE_OBJECT_16(6), 
+	MOVE_RESULT(2), 
+	MOVE_RESULT_WIDE(2), 
+	MOVE_RESULT_OBJECT(2), 
+	MOVE_EXCEPTION(2), 
+	RETURN_VOID(2), 
+	RETURN(2), 
+	RETURN_WIDE(2), 
+	RETURN_OBJECT(2), 
+	CONST_4(2), 
+	CONST_16(4), 
+	CONST(6), 
+	CONST_HIGH16(6), 
+	CONST_WIDE_16(4), 
+	CONST_WIDE_32(6), 
+	CONST_WIDE(10), 
+	CONST_WIDE_HIGH16(10), 
+	CONST_STRING(4), 
+	CONST_STRING_JUMBO(6), 
+	CONST_CLASS(4), 
+	MONITOR_ENTER(2), 
+	MONITOR_EXIT(2), 
+	CHECK_CAST(4), 
+	INSTANCE_OF(4), 
+	ARRAY_LENGTH(2), 
+	NEW_INSTANCE(4), 
+	NEW_ARRAY(4), 
+	FILLED_NEW_ARRAY(6), 
+	FILLED_NEW_ARRAT_RANGE(6), 
+	FILL_ARRAY_DATA(6), 
+	THROW(2), 
+	GOTO(2), 
+	GOTO_16(4), 
+	GOTO_32(6), 
+	PACKED_SWITCH(6), 
+	SPARSE_SWITCH(6), 
+	CMPL_FLOAT(4), 
+	CMPG_FLOAT(4), 
+	CMPL_DOUBLE(4), 
+	CMPG_DOUBLE(4), 
+	CMP_LONG(4), 
+	IF_EQ(4), 
+	IF_NE(4), 
+	IF_LT(4), 
+	IF_GE(4), 
+	IF_GT(4), 
+	IF_LE(4), 
+	IF_EQZ(4), 
+	IF_NEZ(4), 
+	IF_LTZ(4), 
+	IF_GEZ(4), 
+	IF_GTZ(4), 
+	IF_LEZ(4), 
+	NOT_USE_3E(2), 
+	NOT_USE_3F(2), 
+	NOT_USE_40(2), 
+	NOT_USE_41(2), 
+	NOT_USE_42(2), 
+	NOT_USE_43(2), 
+	AGET(4), 
+	AGET_WIDE(4), 
+	AGET_OBJECT(4), 
+	AGET_BOOLEAN(4), 
+	AGET_BYTE(4), 
+	AGET_CHAR(4), 
+	AGET_SHORT(4), 
+	APUT(4), 
+	APUT_WIDE(4), 
+	APUT_OBJECT(4), 
+	APUT_BOOLEAN(4), 
+	APUT_BYTE(4), 
+	APUT_CHAR(4), 
+	APUT_SHORT(4), 
+	IGET(4), 
+	IGET_WIDE(4), 
+	IGET_OBJECT(4), 
+	IGET_BOOLEAN(4), 
+	IGET_BYTE(4), 
+	IGET_CHAR(4), 
+	IGET_SHORT(4),
+	IPUT(4), 
+	IPUT_WIDE(4), 
+	IPUT_OBJECT(4),
+	IPUT_BOOLEAN(4),
+	IPUT_BYTE(4), 
+	IPUT_CHAR(4), 
+	IPUT_SHORT(4), 
+	SGET(4), 
+	SGET_WIDE(4), 
+	SGET_OBJECT(4), 
+	SGET_BOOLEAN(4), 
+	SGET_BYTE(4),
+	SGET_CHAR(4), 
+	SGET_SHORT(4), 
+	SPUT(4), 
+	SPUT_WIDE(4),
+	SPUT_OBJECT(4), 
+	SPUT_BOOLEAN(4), 
+	SPUT_BYTE(4), 
+	SPUT_CHAR(4), 
+	SPUT_SHORT(4), 
+	INVOKE_VIRTUAL(6), 
+	INVOKE_SUPER(6), 
+	INVOKE_DIRECT(6), 
+	INVOKE_STATIC(
+			6), 
+	INVOKE_INTERFACE(
+					6), 
+	NOT_USE_73(
+	2), 
+	INVOKE_VIRTUAL_RANGE(
+			6), 
+	INVOKE_SUPER_RANGE(
+					6), 
+	INVOKE_DIRECT_RANGE(
+	6), 
+	INVOKE_STATIC_RANGE(
+			6), 
+	INVOKE_INTERFACE_RANGE(
+					6), 
+	NOT_USE_79(
+	2),
+	NOT_USE_7A(
+			2), 
+	NEG_INT(
+					2), 
+	NOT_INT(
+	2), 
+	NEG_LONG(
+			2), 
+	NOT_LONG(
+					2), 
+	NEG_FLOAT(
+	2), 
+	NEG_DOUBLE(
+			2), 
+	INT_TO_LONG(
+					2),
+	INT_TO_FLOAT(
+	2), 
+	INT_TO_DOUBLE(
+			2), 
+	LONG_TO_INT(
+					2), 
+	LONG_TO_FLOAT(
+	2), 
+	LONG_TO_DOUBLE(
+			2),
+	FLOAT_TO_INT(
+					2), 
+	FLOAT_TO_LONG(
+	2), 
+	FLOAT_TO_DOUBLE(
+			2), 
+	DOUBLE_TO_INT(
+					2), 
+	DOUBLE_TO_LONG(
+	2), 
+	DOUBLE_TO_FLOAT(
+			2), 
+	INT_TO_BYTE(
+					2), 
+	INT_TO_CHAR(
+	2), 
+	INT_TO_SHORT(
+			2), 
+	ADD_INT(
+					4), 
+	SUB_INT(
+	4), 
+	MUL_INT(
+			4), 
+	DIV_INT(
+					4), 
+	REM_INT(
+	4), 
+	AND_INT(
+			4), 
+	OR_INT(
+					4), 
+	XOR_INT(
+	4), 
+	SHL_INT(
+			4), 
+	SHR_INT(
+					4), 
+	USHR_INT(
+	4), 
+	ADD_LONG(
+			4), 
+	SUB_LONG(
+					4), 
+	MUL_LONG(
+	4), 
+	DIV_LONG(
+			4), 
+	REM_LONG(
+					4), 
+	AND_LONG(
+	4), 
+	OR_LONG(
+			4), 
+	XOR_LONG(
+					4), 
+	SHL_LONG(
+	4), 
+	SHR_LONG(
+			4), 
+	USHR_LONG(
+					4), 
+	ADD_FLOAT(
+	4), 
+	SUB_FLOAT(
+			4), 
+	MUL_FLOAT(
+					4), DIV_FLOAT(
+	4), REM_FLOAT(
+			4), ADD_DOUBLE(
+					4), SUB_DOUBLE(
+	4), MUL_DOUBLE(
+			4), DIV_DOUBLE(
+					4), REM_DOUBLE(
+	4), ADD_INT_2ADDR(
+			2), SUB_INT_2ADDR(
+					2), MUL_INT_2ADDR(
+	2), DIV_INT_2ADDR(
+			2), REM_INT_2ADDR(
+					2), AND_INT_2ADDR(
+	2), OR_INT_2ADDR(
+			2), XOR_INT_2ADDR(
+					2), SHL_INT_2ADDR(
+	2), SHR_INT_2ADDR(
+			2), USHR_INT_2ADDR(
+					2), ADD_LONG_2ADDR(
+	2), SUB_LONG_2ADDR(
+			2), MUL_LONG_2ADDR(
+					2), DIV_LONG_2ADDR(
+	2), REM_LONG_2ADDR(
+			2), AND_LONG_2ADDR(
+					2), OR_LONG_2ADDR(
+	2), XOR_LONG_2ADDR(
+			2), SHL_LONG_2ADDR(
+					2), SHR_LONG_2ADDR(
+	2), USHR_LONG_2ADDR(
+			2), ADD_FLOAT_2ADDR(
+					2), SUB_FLOAT_2ADDR(
+	2), MUL_FLOAT_2ADDR(
+			2), DIV_FLOAT_2ADDR(
+					2), REM_FLOAT_2ADDR(
+	2), ADD_DOUBLE_2ADDR(
+			2), SUB_DOUBLE_2ADDR(
+					2), MUL_DOUBLE_2ADDR(
+	2), DIV_DOUBLE_2ADDR(
+			2), REM_DOUBLE_2ADDR(
+					2), ADD_INT_LIT16(
+	4), RSUB_INT(
+			4), MUL_INT_LIT16(
+					4), DIV_INT_LIT16(
+	4), REM_INT_LIT16(
+			4), AND_INT_LIT16(
+					4), OR_INT_LIT16(
+	4), XOR_INT_LIT16(
+			4), ADD_INT_LIT8(
+					4), RSUB_INT_LIT8(
+	4), MUL_INT_LIT8(
+			4), DIV_INT_LIT8(
+					4), REM_INT_LIT8(
+	4), AND_INT_LIT8(
+			4), OR_INT_LIT8(
+					4), XOR_INT_LIT8(
+	4), SHL_INT_LIT8(
+			4), SHR_INT_LIT8(
+					4), USHR_INT_LIT8(
+	4), NOT_USE_E3(
+			2), NOT_USE_E4(
+					2), NOT_USE_E5(
+	2), NOT_USE_E6(
+			2), NOT_USE_E7(
+					2), NOT_USE_E8(
+	2), NOT_USE_E9(
+			2), NOT_USE_EA(
+					2), NOT_USE_EB(
+	2), NOT_USE_EC(
+			2), NOT_USE_ED(
+					2), NOT_USE_EE(
+	2), NOT_USE_EF(
+			2), NOT_USE_F0(
+					2), NOT_USE_F1(
+	2), NOT_USE_F2(
+			2), NOT_USE_F3(
+					2), NOT_USE_F4(
+	2), NOT_USE_F5(
+			2), NOT_USE_F6(
+					2), NOT_USE_F7(
+	2), NOT_USE_F8(
+			2), NOT_USE_F9(
+					2), INVOKE_POLYMORPHIC(
+	8), INVOKE_POLYMORPHIC_RANGE(
+			8), INVOKE_CUSTOM(
+					6), INVOKE_CUSTOM_RANGE(
+	6), NOT_USE_FE(
+			2), NOT_USE_FF(
+					2);
+
+	public int length;
+
+	private OpCode(int length) {
+		this.length = length;
+	}
+
+}
