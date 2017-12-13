@@ -1,14 +1,12 @@
 package hluwa.dex;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
 import hluwa.common.ByteCursor;
 import hluwa.dex.base.Item;
+import hluwa.dex.base.Pool;
 import hluwa.dex.format.*;
 
 public class DexParser {
@@ -101,7 +99,7 @@ public class DexParser {
 		MapList map = new MapList(size);
 		for (int i = 0; i < size; i++) {
 			int file_off = cursor.getPos();
-			Map_Item item = new Map_Item(cursor.getBytes(), file_off);
+			Map_Item item = new Map_Item(cursor.getData(), file_off);
 			map.map_list.add(item);
 			cursor.belowMove(item.getLength());
 		}
@@ -113,40 +111,40 @@ public class DexParser {
 		int i = 0;
 		while (i < map.getSize()) {
 			Map_Item mapitem = map.map_list.get(i);
-			ItemList itemlist = null;
-			ItemList datalist = null;
+			Pool itemlist = null;
+			Pool datalist = null;
 			int fristoff;
 			switch (mapitem.type) {
 			case Map_Item.STRING_ID_MAP:
-				itemlist = new ItemList<String_Id_Item>(String_Id_Item.class);
+				itemlist = new Pool<String_Id_Item>(String_Id_Item.class);
 				dexfile.setString_id_list(itemlist);
 				break;
 			case Map_Item.TYPE_ID_MAP:
-				itemlist = new ItemList<Type_Id_Item>(Type_Id_Item.class);
+				itemlist = new Pool<Type_Id_Item>(Type_Id_Item.class);
 				dexfile.setType_id_list(itemlist);
 				break;
 			case Map_Item.PROTO_ID_MAP:
-				itemlist = new ItemList<Proto_Id_Item>(Proto_Id_Item.class);
+				itemlist = new Pool<Proto_Id_Item>(Proto_Id_Item.class);
 				dexfile.setProto_id_list(itemlist);
 				break;
 			case Map_Item.FIELD_ID_MAP:
-				itemlist = new ItemList<Field_Id_Item>(Field_Id_Item.class);
+				itemlist = new Pool<Field_Id_Item>(Field_Id_Item.class);
 				dexfile.setField_id_list(itemlist);
 				break;
 			case Map_Item.METHOD_ID_MAP:
-				itemlist = new ItemList<Method_Id_Item>(Method_Id_Item.class);
+				itemlist = new Pool<Method_Id_Item>(Method_Id_Item.class);
 				dexfile.setMethod_id_list(itemlist);
 				break;
 			case Map_Item.CLASS_DEF_MAP:
-				itemlist = new ItemList<Class_Def_Item>(Class_Def_Item.class);
+				itemlist = new Pool<Class_Def_Item>(Class_Def_Item.class);
 				dexfile.setClass_def_list(itemlist);
 				break;
 			case Map_Item.STRING_DATA_MAP:
-				datalist = new ItemList<String_Data_Item>(String_Data_Item.class);
+				datalist = new Pool<String_Data_Item>(String_Data_Item.class);
 				cursor.move(mapitem.offset);
 				fristoff = cursor.getPos();
 				for (int pos = 0; pos < mapitem.size; pos++) {
-					String_Data_Item item = new String_Data_Item(cursor.getBytes(), cursor.getPos());
+					String_Data_Item item = new String_Data_Item(cursor.getData(), cursor.getPos());
 					datalist.add(item);
 					cursor.belowMove(item.getLength());
 				}
@@ -156,12 +154,12 @@ public class DexParser {
 				dexfile.setString_data_list(datalist);
 				break;
 			case Map_Item.TYPE_LIST_MAP:
-				datalist = new ItemList<Type_List_Item>(Type_List_Item.class);
+				datalist = new Pool<Type_List_Item>(Type_List_Item.class);
 				cursor.move(mapitem.offset);
 				fristoff = cursor.getPos();
 				for (int pos = 0; pos < mapitem.size; pos++) {
 					int off = cursor.getPos();
-					Type_List_Item item = new Type_List_Item(cursor.getBytes(), off);
+					Type_List_Item item = new Type_List_Item(cursor.getData(), off);
 					datalist.add(item);
 					cursor.belowMove(item.getLength());
 					if(item.size % 2 != 0) 
@@ -182,7 +180,7 @@ public class DexParser {
 					Constructor constructor;
 					try {
 						constructor = itemlist.itemType.getConstructor(byte[].class, int.class);
-						Item item = (Item) (constructor.newInstance(cursor.getBytes(), cursor.getPos()));
+						Item item = (Item) (constructor.newInstance(cursor.getData(), cursor.getPos()));
 						itemlist.add(item);
 						cursor.belowMove(item.getLength());
 					} catch (NoSuchMethodException e) {

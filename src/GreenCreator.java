@@ -4,11 +4,14 @@ import java.io.IOException;
 import hluwa.dex.format.DexFile;
 import hluwa.dex.format.insns_item;
 import hluwa.dex.DexChanger;
+import hluwa.dex.type.TypeCast;
+import hluwa.dex.type.uLeb128;
 
 public class GreenCreator {
 	public static void main(String args[]) throws IOException 
 	{
-
+        System.out.println(new TypeCast(new byte[]{0x1c}).toLeb128().getData());
+        System.exit(0);
 		String path = "/Users/hluwa/Downloads/com.fujicubesoft.ManyBricksBreaker/classes.dex";
 		DexChanger changer = new DexChanger(new File(path));
 		DexFile dexfile = changer.getDexFile();

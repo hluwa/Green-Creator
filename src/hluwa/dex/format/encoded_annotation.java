@@ -20,7 +20,7 @@ public class encoded_annotation extends Item {
 		element = new annotation_element[size.toInt()];
 		for(int i = 0;i < size.toInt(); i++) 
 		{
-			element[i] = new annotation_element(this.cursor.getBytes(),this.cursor.getPos());
+			element[i] = new annotation_element(this.cursor.getData(),this.cursor.getPos());
 			this.cursor.belowMove(element[i].getLength());
 		}
 	}

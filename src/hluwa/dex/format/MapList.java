@@ -1,8 +1,10 @@
 package hluwa.dex.format;
 
+import hluwa.dex.base.Pool;
+
 public class MapList {
 	private int size;
-	public ItemList<Map_Item> map_list = new ItemList<Map_Item>();
+	public Pool<Map_Item> map_list = new Pool<Map_Item>();
 
 	public Map_Item get(int index) {
 		return map_list.get(index);

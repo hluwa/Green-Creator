@@ -16,7 +16,7 @@ public class annotation_element extends Item {
 	@Override
 	public void parseData() {
 		name_idx = this.cursor.nextuLeb128();
-		value = new encoded_value(this.cursor.getBytes(),this.cursor.getPos());
+		value = new encoded_value(this.cursor.getData(),this.cursor.getPos());
 	}
 
 	@Override

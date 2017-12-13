@@ -28,7 +28,7 @@ public class annotations_directory_item extends Item {
 			field_annotations = new id_annotation[fields_size];
 			for(int i = 0;i < fields_size;i++) 
 			{
-				field_annotations[i] = new id_annotation(this.cursor.getBytes(),this.cursor.getPos());
+				field_annotations[i] = new id_annotation(this.cursor.getData(),this.cursor.getPos());
 				this.cursor.belowMove(field_annotations[i].getLength());
 			}
 		}
@@ -37,7 +37,7 @@ public class annotations_directory_item extends Item {
 			method_annotations = new id_annotation[annotated_methods_size];
 			for(int i = 0;i < annotated_methods_size;i++) 
 			{
-				method_annotations[i] = new id_annotation(this.cursor.getBytes(),this.cursor.getPos());
+				method_annotations[i] = new id_annotation(this.cursor.getData(),this.cursor.getPos());
 				this.cursor.belowMove(method_annotations[i].getLength());
 			}
 		}
@@ -46,7 +46,7 @@ public class annotations_directory_item extends Item {
 			parameter_annotations = new id_annotation[annotated_parameters_size];
 			for(int i = 0;i < annotated_parameters_size;i++) 
 			{
-				parameter_annotations[i] = new id_annotation(this.cursor.getBytes(),this.cursor.getPos());
+				parameter_annotations[i] = new id_annotation(this.cursor.getData(),this.cursor.getPos());
 				this.cursor.belowMove(parameter_annotations[i].getLength());
 			}
 		}

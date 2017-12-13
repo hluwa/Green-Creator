@@ -1,5 +1,7 @@
 package hluwa.dex.format;
 
+import hluwa.dex.base.Pool;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -11,15 +13,15 @@ public class DexFile {
 
 	private DexHeader header;
 
-	private ItemList<String_Id_Item> string_id_list;
-	private ItemList<Type_Id_Item> type_id_list;
-	private ItemList<Proto_Id_Item> proto_id_list;
-	private ItemList<Field_Id_Item> field_id_list;
-	private ItemList<Method_Id_Item> method_id_list;
-	private ItemList<Class_Def_Item> class_def_list;
+	private Pool<String_Id_Item> string_id_list;
+	private Pool<Type_Id_Item> type_id_list;
+	private Pool<Proto_Id_Item> proto_id_list;
+	private Pool<Field_Id_Item> field_id_list;
+	private Pool<Method_Id_Item> method_id_list;
+	private Pool<Class_Def_Item> class_def_list;
 
-	private ItemList<String_Data_Item> string_data_list;
-	private ItemList<Type_List_Item> type_list_list;
+	private Pool<String_Data_Item> string_data_list;
+	private Pool<Type_List_Item> type_list_list;
 
 	private MapList map_list;
 
@@ -178,35 +180,35 @@ public class DexFile {
 		this.header = header;
 	}
 
-	public ItemList<String_Id_Item> getString_id_list() {
+	public Pool<String_Id_Item> getString_id_list() {
 		return string_id_list;
 	}
 
-	public void setString_id_list(ItemList<String_Id_Item> string_id_list) {
+	public void setString_id_list(Pool<String_Id_Item> string_id_list) {
 		this.string_id_list = string_id_list;
 	}
 
-	public ItemList<Type_Id_Item> getType_id_list() {
+	public Pool<Type_Id_Item> getType_id_list() {
 		return type_id_list;
 	}
 
-	public void setType_id_list(ItemList<Type_Id_Item> type_id_list) {
+	public void setType_id_list(Pool<Type_Id_Item> type_id_list) {
 		this.type_id_list = type_id_list;
 	}
 
-	public ItemList<Proto_Id_Item> getProto_id_list() {
+	public Pool<Proto_Id_Item> getProto_id_list() {
 		return proto_id_list;
 	}
 
-	public void setProto_id_list(ItemList<Proto_Id_Item> proto_id_list) {
+	public void setProto_id_list(Pool<Proto_Id_Item> proto_id_list) {
 		this.proto_id_list = proto_id_list;
 	}
 
-	public ItemList<Method_Id_Item> getMethod_id_list() {
+	public Pool<Method_Id_Item> getMethod_id_list() {
 		return method_id_list;
 	}
 
-	public void setMethod_id_list(ItemList<Method_Id_Item> method_id_list) {
+	public void setMethod_id_list(Pool<Method_Id_Item> method_id_list) {
 		this.method_id_list = method_id_list;
 	}
 
@@ -222,35 +224,35 @@ public class DexFile {
 		this.map_list = map_list;
 	}
 
-	public ItemList<Field_Id_Item> getField_id_list() {
+	public Pool<Field_Id_Item> getField_id_list() {
 		return field_id_list;
 	}
 
-	public void setField_id_list(ItemList<Field_Id_Item> field_id_list) {
+	public void setField_id_list(Pool<Field_Id_Item> field_id_list) {
 		this.field_id_list = field_id_list;
 	}
 
-	public ItemList<Class_Def_Item> getClass_def_list() {
+	public Pool<Class_Def_Item> getClass_def_list() {
 		return class_def_list;
 	}
 
-	public void setClass_def_list(ItemList<Class_Def_Item> class_def_list) {
+	public void setClass_def_list(Pool<Class_Def_Item> class_def_list) {
 		this.class_def_list = class_def_list;
 	}
 
-	public ItemList<String_Data_Item> getString_data_list() {
+	public Pool<String_Data_Item> getString_data_list() {
 		return string_data_list;
 	}
 
-	public void setString_data_list(ItemList<String_Data_Item> string_data_list) {
+	public void setString_data_list(Pool<String_Data_Item> string_data_list) {
 		this.string_data_list = string_data_list;
 	}
 
-	public ItemList<Type_List_Item> getType_list_list() {
+	public Pool<Type_List_Item> getType_list_list() {
 		return type_list_list;
 	}
 
-	public void setType_list_list(ItemList<Type_List_Item> type_list_list) {
+	public void setType_list_list(Pool<Type_List_Item> type_list_list) {
 		this.type_list_list = type_list_list;
 	}
 

@@ -47,7 +47,7 @@ public class Code_Item extends Item {
 		this.cursor.aboveMove(insns_size * 2);
 		int i = 0;
 		while (i < insns.length) {
-			insns_item item = new insns_item(this.cursor.getBytes(), this.cursor.getPos());
+			insns_item item = new insns_item(this.cursor.getData(), this.cursor.getPos());
 			this.insns_items.add(item);
 			this.cursor.belowMove(item.getLength());
 			i += item.getLength();
@@ -65,7 +65,7 @@ public class Code_Item extends Item {
 		}
 		if(debug_info_off != 0) 
 		{
-			debug_info = new debug_info_item(this.cursor.getBytes(),this.cursor.getPos());
+			debug_info = new debug_info_item(this.cursor.getData(),this.cursor.getPos());
 		}
 	}
 }

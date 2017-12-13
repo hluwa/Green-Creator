@@ -71,7 +71,7 @@ public class ByteCursor {
 
 	public encoded_value nextEncoeded_value()
 	{
-		encoded_value value = new encoded_value(this.getBytes(),this.position);
+		encoded_value value = new encoded_value(this.getData(),this.position);
 		this.belowMove(value.getLength());
 		return value;
 	}
@@ -140,7 +140,7 @@ public class ByteCursor {
 		return this.position;
 	}
 
-	public byte[] getBytes() {
+	public byte[] getData() {
 		return data;
 	}
 }

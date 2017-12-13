@@ -17,7 +17,7 @@ import hluwa.dex.format.Code_Item;
 import hluwa.dex.format.DexFile;
 import hluwa.dex.format.DexHeader;
 import hluwa.dex.format.Field_Id_Item;
-import hluwa.dex.format.ItemList;
+import hluwa.dex.base.Pool;
 import hluwa.dex.format.Method_Id_Item;
 import hluwa.dex.format.String_Data_Item;
 import hluwa.dex.format.String_Id_Item;
@@ -63,7 +63,7 @@ public class DexChanger extends FileChange {
 	public void restoreClassesNameBySource()
 			throws QueryNextDataException, NonStandardLeb128Exception, CursorMoveException {
 		DexFile dexfile = this.getDexFile();
-		ItemList<Class_Def_Item> classes = dexfile.getClass_def_list();
+		Pool<Class_Def_Item> classes = dexfile.getClass_def_list();
 		for (int i = 0; i < classes.size(); i++) {
 			Class_Def_Item cls = classes.get(i);
 
@@ -127,7 +127,7 @@ public class DexChanger extends FileChange {
 	
 	public void changeClassesName() throws QueryNextDataException, NonStandardLeb128Exception, CursorMoveException {
 		DexFile dexfile = this.getDexFile();
-		ItemList<Class_Def_Item> classes = dexfile.getClass_def_list();
+		Pool<Class_Def_Item> classes = dexfile.getClass_def_list();
 
 		int i = 0;
 		for (Class_Def_Item cls : classes) {
@@ -141,7 +141,7 @@ public class DexChanger extends FileChange {
 
 	public void changeMethodsName() throws QueryNextDataException, NonStandardLeb128Exception, CursorMoveException {
 		DexFile dexfile = this.getDexFile();
-		ItemList<Method_Id_Item> methods = dexfile.getMethod_id_list();
+		Pool<Method_Id_Item> methods = dexfile.getMethod_id_list();
 
 		int i = 0;
 		for (Method_Id_Item method : methods) {
@@ -156,7 +156,7 @@ public class DexChanger extends FileChange {
 
 	public void changeFieldsName() throws QueryNextDataException, NonStandardLeb128Exception, CursorMoveException {
 		DexFile dexfile = this.getDexFile();
-		ItemList<Field_Id_Item> fields = dexfile.getField_id_list();
+		Pool<Field_Id_Item> fields = dexfile.getField_id_list();
 
 		int i = 0;
 		for (Field_Id_Item field : fields) {

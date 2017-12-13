@@ -20,12 +20,12 @@ public class encoded_value extends Item {
 		arg = (byte) (b >> 5);
 		if(type == value_type.VALUE_ARRAY) 
 		{
-			encoded_array arr = new encoded_array(this.cursor.getBytes(),this.cursor.getPos());
+			encoded_array arr = new encoded_array(this.cursor.getData(),this.cursor.getPos());
 			value = this.cursor.nextData(arr.getLength());
 		}
 		if(type == value_type.VALUE_ANNOTATION) 
 		{
-			encoded_annotation arr = new encoded_annotation(this.cursor.getBytes(),this.cursor.getPos());
+			encoded_annotation arr = new encoded_annotation(this.cursor.getData(),this.cursor.getPos());
 			value = this.cursor.nextData(arr.getLength());
 		}
 		if(type == value_type.VALUE_NULL) 

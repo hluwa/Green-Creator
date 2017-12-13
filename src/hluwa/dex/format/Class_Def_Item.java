@@ -44,19 +44,19 @@ public class Class_Def_Item extends Item {
 		class_data_off = this.cursor.nextInt();
 		static_value_off = this.cursor.nextInt();
 		if (class_data_off != 0) {
-			this.class_data = new Class_Data(this.cursor.getBytes(), class_data_off);
+			this.class_data = new Class_Data(this.cursor.getData(), class_data_off);
 		}
 		if(interfaces_off != 0) 
 		{
-			this.interfaces = new Type_List_Item(this.cursor.getBytes(), interfaces_off);
+			this.interfaces = new Type_List_Item(this.cursor.getData(), interfaces_off);
 		}
 		if(static_value_off != 0) 
 		{
-			this.static_value = new encoded_array(this.cursor.getBytes(), static_value_off);
+			this.static_value = new encoded_array(this.cursor.getData(), static_value_off);
 		}
 		if(annotations_off != 0) 
 		{
-			this.annotations = new annotations_directory_item(this.cursor.getBytes(),annotations_off);
+			this.annotations = new annotations_directory_item(this.cursor.getData(),annotations_off);
 		}
 	}
 }

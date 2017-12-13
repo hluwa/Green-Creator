@@ -1,21 +1,21 @@
-package hluwa.dex.format;
+package hluwa.dex.base;
 
 import java.util.ArrayList;
 
 import hluwa.dex.base.Item;
 
 @SuppressWarnings("serial")
-public class ItemList<T extends Item> extends ArrayList<T> {
+public class Pool<T extends Item> extends ArrayList<T> {
 	private int startOff;
 	private int endOff;
 	private int allLength;
 	public Class<? extends Item> itemType;
 
-	public ItemList() {
+	public Pool() {
 		super();
 	}
 
-	public ItemList(Class<? extends Item> cls) {
+	public Pool(Class<? extends Item> cls) {
 		this();
 		itemType = cls;
 	}

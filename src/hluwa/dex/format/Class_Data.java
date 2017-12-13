@@ -54,7 +54,7 @@ public class Class_Data extends Item {
 		this.virtual_methods_size = cursor.nextuLeb128();
 
 		for (int i = 0; i < static_fields_size.toInt(); i++) {
-			encoded_field field = new encoded_field(this.cursor.getBytes(), this.cursor.getPos());
+			encoded_field field = new encoded_field(this.cursor.getData(), this.cursor.getPos());
 			this.cursor.belowMove(field.getLength());
 			if (i != 0) {
 				field.real_id = this.static_fields.get(i - 1).real_id + field.field_id.toInt();
@@ -65,7 +65,7 @@ public class Class_Data extends Item {
 
 		}
 		for (int i = 0; i < instance_fields_size.toInt(); i++) {
-			encoded_field field = new encoded_field(this.cursor.getBytes(), this.cursor.getPos());
+			encoded_field field = new encoded_field(this.cursor.getData(), this.cursor.getPos());
 			this.cursor.belowMove(field.getLength());
 			if (i != 0) {
 				field.real_id = this.instance_fields.get(i - 1).real_id + field.field_id.toInt();
@@ -75,7 +75,7 @@ public class Class_Data extends Item {
 			this.instance_fields.add(field);
 		}
 		for (int i = 0; i < direct_methods_size.toInt(); i++) {
-			encoded_method method = new encoded_method(this.cursor.getBytes(), this.cursor.getPos());
+			encoded_method method = new encoded_method(this.cursor.getData(), this.cursor.getPos());
 			this.cursor.belowMove(method.getLength());
 			if (i != 0) {
 				method.real_id = this.direct_methods.get(i - 1).real_id + method.method_id.toInt();
@@ -85,7 +85,7 @@ public class Class_Data extends Item {
 			this.direct_methods.add(method);
 		}
 		for (int i = 0; i < virtual_methods_size.toInt(); i++) {
-			encoded_method method = new encoded_method(this.cursor.getBytes(), this.cursor.getPos());
+			encoded_method method = new encoded_method(this.cursor.getData(), this.cursor.getPos());
 			this.cursor.belowMove(method.getLength());
 			if (i != 0) {
 				method.real_id = this.virtual_methods.get(i - 1).real_id + method.method_id.toInt();

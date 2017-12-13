@@ -91,20 +91,20 @@ public class TypeCast {
 		} else {
 			if(this.data.length == 1) 
 			{
-				this.ival = this.data[0] & 0xFF  << 24;
+				this.ival = (this.data[0] & 0xFF) << 24;
 			}
 			else if(this.data.length == 2) 
 			{
-				this.ival = this.data[0] & 0xFF << 24 | this.data[1] & 0xFF << 16;
+				this.ival = (this.data[0] & 0xFF) << 24 | (this.data[1] & 0xFF) << 16;
 			}
 			else if(this.data.length == 3) 
 			{
-				this.ival = this.data[0] & 0xFF << 24 | this.data[1] & 0xFF << 16 | this.data[2] & 0xFF << 8;
+				this.ival = (this.data[0] & 0xFF) << 24 | (this.data[1] & 0xFF) << 16 | (this.data[2] & 0xFF) << 8;
 			}
 			else if(this.data.length >= 4) 
 			{
 
-				this.ival = this.data[0] & 0xFF << 24 | this.data[1] & 0xFF << 16 | this.data[2] & 0xFF << 8 | this.data[3] & 0xFF & 0xff;
+				this.ival = (this.data[0] & 0xFF) << 24 | (this.data[1] & 0xFF) << 16 | (this.data[2] & 0xFF) << 8 | (this.data[3] & 0xFF);
 			}
 			else 
 			{

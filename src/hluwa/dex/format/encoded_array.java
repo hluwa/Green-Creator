@@ -19,7 +19,7 @@ public class encoded_array extends Item {
 		values = new encoded_value[size.toInt()];
 		for(int i = 0 ;i < values.length; i++) 
 		{
-			values[i] = new encoded_value(this.cursor.getBytes(),this.cursor.getPos()); 
+			values[i] = new encoded_value(this.cursor.getData(),this.cursor.getPos());
 			this.cursor.belowMove(values[i].getLength());
 		}
 	}
