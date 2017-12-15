@@ -17,7 +17,7 @@ public class ResChunk_Header extends struct {
             RES_XML_LAST_CHUNK_TYPE     = 0x017f,
             RES_XML_RESOURCE_MAP_TYPE   = 0x0180,
             RES_TABLE_PACKAGE_TYPE      = 0x0200,
-            RES_TAshBLE_TYPE_TYPE       = 0x0201,
+            RES_TASHBLE_TYPE_TYPE       = 0x0201,
             RES_TABLE_TYPE_SPEC_TYPE    = 0x0202;
 
     public ResChunk_Header(byte[] data, int off) {
@@ -25,9 +25,9 @@ public class ResChunk_Header extends struct {
     }
 
 
-    short Chunk_Type;
-    short Chunk_Head_Size;
-    int Chunk_Size;
+    public short Chunk_Type;
+    public short Chunk_Head_Size;
+    public int Chunk_Size;
 
     @Override
     public void parseData() {

@@ -1,8 +1,9 @@
 package hluwa.arsc.format;
 
+import hluwa.arsc.base.Arsc_Struct;
 import hluwa.common.struct;
 
-public class ResStringPool_Header extends struct {
+public class ResStringPool_Header extends Arsc_Struct {
 
     public static final int
             // If set, the string index is sorted by the string values (based on strcmp16()).
@@ -10,7 +11,6 @@ public class ResStringPool_Header extends struct {
             // String pool is encoded in UTF-8
             UTF8_FLAG = 1<<8;
 
-    ResChunk_Header chunk_header;
     int string_count;
     int style_count;
     int flag;
@@ -23,8 +23,7 @@ public class ResStringPool_Header extends struct {
 
     @Override
     public void parseData() {
-        chunk_header = new ResChunk_Header(this.cursor.getData(),this.cursor.getPos());
-        this.cursor.belowMove(chunk_header.getLength());
+        super.parseData();
         string_count = this.cursor.nextInt();
         style_count = this.cursor.nextInt();
         flag = this.cursor.nextInt();
@@ -34,6 +33,6 @@ public class ResStringPool_Header extends struct {
 
     @Override
     public int getLength() {
-        return chunk_header.getLength() + 20;
+        return super.getLength() + 20;
     }
 }

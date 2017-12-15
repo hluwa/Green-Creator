@@ -56,7 +56,6 @@ public class DexParser {
 			System.out.println("[Error] This file is not DexFile ");
 			return null;
 		}
-		DexFile dexFile = new DexFile();
 		ByteCursor cursor = new ByteCursor(file);
 		return ParseDex(cursor);
 	}

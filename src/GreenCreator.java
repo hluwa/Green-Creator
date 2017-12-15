@@ -1,6 +1,8 @@
 import java.io.File;
 import java.io.IOException;
 
+import hluwa.arsc.ARSCParser;
+import hluwa.arsc.format.ArscFile;
 import hluwa.dex.format.DexFile;
 import hluwa.dex.format.insns_item;
 import hluwa.dex.DexChanger;
@@ -13,6 +15,9 @@ public class GreenCreator {
         System.out.println(new TypeCast(new byte[]{0x1c}).toLeb128().getData());
         System.exit(0);
 		String path = "/Users/hluwa/Downloads/com.fujicubesoft.ManyBricksBreaker/classes.dex";
+		String arscPath = "/Users/hluwa/Downloads/com.fujicubesoft.ManyBricksBreaker/resources.arsc";
+		ArscFile arscFile = ARSCParser.ParseArsc(new File(arscPath));
+		System.out.println(arscFile);
 		DexChanger changer = new DexChanger(new File(path));
 		DexFile dexfile = changer.getDexFile();
 		String magiclist[] = {

@@ -1,9 +1,9 @@
 package hluwa.arsc.format;
 
+import hluwa.arsc.base.Arsc_Struct;
 import hluwa.common.struct;
 
-public class ResTable_Header extends struct {
-    ResChunk_Header chunk_header;
+public class ResTable_Header extends Arsc_Struct {
     int packageCount;
 
     public ResTable_Header(byte[] data, int off) {
@@ -13,13 +13,12 @@ public class ResTable_Header extends struct {
 
     @Override
     public void parseData() {
-        chunk_header = new ResChunk_Header(this.cursor.getData(),this.cursor.getPos());
-        this.cursor.belowMove(chunk_header.getLength());
+        super.parseData();
         packageCount = this.cursor.nextInt();
     }
 
     @Override
     public int getLength() {
-        return chunk_header.getLength() + 4;
+        return super.getLength() + 4;
     }
 }
