@@ -5,7 +5,7 @@ import hluwa.arsc.base.Arsc_Type;
 import java.util.ArrayList;
 
 public class ResType_Spec extends Arsc_Type {
-    ArrayList<Integer> entrys = new ArrayList<Integer>();
+    public ArrayList<Integer> entrys;
 
     public ResType_Spec(byte[] data, int off) {
         super(data, off);
@@ -14,6 +14,7 @@ public class ResType_Spec extends Arsc_Type {
     @Override
     public void parseData() {
         super.parseData();
+        entrys = new ArrayList<Integer>();
         for(int i = 0; i < this.entryCount; i++)
         {
             entrys.add(this.cursor.nextInt());

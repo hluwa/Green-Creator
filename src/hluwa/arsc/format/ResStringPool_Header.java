@@ -11,11 +11,11 @@ public class ResStringPool_Header extends Arsc_Struct {
             // String pool is encoded in UTF-8
             UTF8_FLAG = 1<<8;
 
-    int string_count;
-    int style_count;
-    int flag;
-    int stringsStart;
-    int stylesStart;
+    public int string_count;
+    public int style_count;
+    public int flag;
+    public int stringsStart;
+    public int stylesStart;
 
     public ResStringPool_Header(byte[] data, int off) {
         super(data, off);

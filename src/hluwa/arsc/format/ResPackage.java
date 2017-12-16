@@ -6,18 +6,18 @@ import hluwa.common.struct;
 import java.util.ArrayList;
 
 public class ResPackage extends Arsc_Struct {
-    int package_id;
-    byte[] package_name;
-    int typeStringOffset;
-    int lastPublicType;
-    int keyStringsOffset;
-    int lastPublicKey;
-    int lastIdOffset;
-    ResStringPool typeStrings;
-    ResStringPool keyStrings;
+    public int package_id;
+    public byte[] package_name;
+    public int typeStringOffset;
+    public int lastPublicType;
+    public int keyStringsOffset;
+    public int lastPublicKey;
+    public int lastIdOffset;
+    public ResStringPool typeStrings;
+    public ResStringPool keyStrings;
 
-    ArrayList<ResType_Spec> typeSpecs = new ArrayList<ResType_Spec>();
-    ArrayList<ResType_Type> typeTypes = new ArrayList<ResType_Type>();
+    public ArrayList<ResType_Spec> typeSpecs;
+    public ArrayList<ResType_Type> typeTypes;
     public ResPackage(byte[] data, int off) {
         super(data, off);
     }
@@ -25,8 +25,10 @@ public class ResPackage extends Arsc_Struct {
     @Override
     public void parseData() {
         super.parseData();
+        typeSpecs = new ArrayList<ResType_Spec>();
+        typeTypes = new ArrayList<ResType_Type>();
         this.package_id = this.cursor.nextInt();
-        this.package_name = this.cursor.nextData(128);
+        this.package_name = this.cursor.nextData(256);
         this.typeStringOffset = this.cursor.nextInt();
         this.lastPublicType = this.cursor.nextInt();
         this.keyStringsOffset = this.cursor.nextInt();

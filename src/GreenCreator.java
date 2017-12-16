@@ -12,12 +12,11 @@ import hluwa.dex.type.uLeb128;
 public class GreenCreator {
 	public static void main(String args[]) throws IOException 
 	{
-        System.out.println(new TypeCast(new byte[]{0x1c}).toLeb128().getData());
-        System.exit(0);
 		String path = "/Users/hluwa/Downloads/com.fujicubesoft.ManyBricksBreaker/classes.dex";
-		String arscPath = "/Users/hluwa/Downloads/com.fujicubesoft.ManyBricksBreaker/resources.arsc";
+		String arscPath = "/Users/hluwa/Downloads/com.fujicubesoft-1.ManyBricksBreaker/resources.arsc";
 		ArscFile arscFile = ARSCParser.ParseArsc(new File(arscPath));
-		System.out.println(arscFile);
+//		System.out.println(arscFile.stringPool.strings.get(0));
+//		System.exit(0);
 		DexChanger changer = new DexChanger(new File(path));
 		DexFile dexfile = changer.getDexFile();
 		String magiclist[] = {

@@ -4,17 +4,17 @@ import hluwa.arsc.base.Arsc_Struct;
 import hluwa.common.struct;
 
 public class ResType_Config extends struct {
-    int size;
-    int imsi;
-    int locale;
-    int screenType;
-    int input;
-    int screenSize;
-    int version;
-    int screenConfig;
-    int screenSizeDp;
-    byte[] localScript;
-    byte[] localeVariant;
+    public int size;
+    public int imsi;
+    public int locale;
+    public int screenType;
+    public int input;
+    public int screenSize;
+    public int version;
+    public int screenConfig;
+    public int screenSizeDp;
+    public byte[] localScript;
+    public byte[] localeVariant;
 //    int screenConfig2;
 
     public ResType_Config(byte[] data, int off) {

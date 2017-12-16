@@ -16,7 +16,7 @@ public class Arsc_Type extends Arsc_Struct {
         super.parseData();
         this.id = this.cursor.nextByte();
         this.res0 = this.cursor.nextByte();
-        this.res1 = this.cursor.nextByte();
+        this.res1 = this.cursor.nextShort();
         this.entryCount = this.cursor.nextInt();
     }
 

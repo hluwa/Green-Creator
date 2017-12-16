@@ -36,9 +36,9 @@ public class ARSCParser {
             }
             cur += chunk_header.Chunk_Size;
         }
-        file.setTable_header(header);
-        file.setStringPool(stringPool);
-        file.setPackages(packages);
+        file.table_header = header;
+        file.stringPool = stringPool;
+        file.packages = packages;
         return file;
     }
     public static ArscFile ParseArsc(File file)

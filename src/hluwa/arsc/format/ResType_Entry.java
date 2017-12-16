@@ -3,9 +3,9 @@ package hluwa.arsc.format;
 import hluwa.common.struct;
 
 public class ResType_Entry extends struct {
-    short size;
-    short flags;
-    int ketRef;
+    public short size;
+    public short flags;
+    public int ketRef;
     public ResType_Entry(byte[] data, int off) {
         super(data, off);
     }
@@ -19,6 +19,6 @@ public class ResType_Entry extends struct {
 
     @Override
     public int getLength() {
-        return this.size;
+        return 8;
     }
 }

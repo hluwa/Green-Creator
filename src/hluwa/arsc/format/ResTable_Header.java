@@ -4,7 +4,7 @@ import hluwa.arsc.base.Arsc_Struct;
 import hluwa.common.struct;
 
 public class ResTable_Header extends Arsc_Struct {
-    int packageCount;
+    public int packageCount;
 
     public ResTable_Header(byte[] data, int off) {
         super(data, off);

@@ -33,7 +33,7 @@ public class ResChunk_Header extends struct {
     public void parseData() {
         Chunk_Type = this.cursor.nextShort();
         Chunk_Head_Size = this.cursor.nextShort();
-        Chunk_Size = this.cursor.nextShort();
+        Chunk_Size = this.cursor.nextInt();
     }
 
     @Override

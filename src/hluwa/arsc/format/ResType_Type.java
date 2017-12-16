@@ -6,10 +6,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ResType_Type  extends Arsc_Type {
-    int entriesStart;
-    ResType_Config config;
-    ArrayList<Integer> entryOffsets = new ArrayList<Integer>();
-    HashMap<ResType_Entry,ResType_Value> resEntrys = new HashMap<ResType_Entry, ResType_Value>();
+    public int entriesStart;
+    public ResType_Config config;
+    public ArrayList<Integer> entryOffsets;
+    public ArrayList<ResType_MapEntry> mapEntries;
+    public HashMap<ResType_Entry,ResType_Value> resEntrys;
+
     public ResType_Type(byte[] data, int off) {
         super(data, off);
     }
@@ -17,6 +19,9 @@ public class ResType_Type  extends Arsc_Type {
     @Override
     public void parseData() {
         super.parseData();
+        entryOffsets = new ArrayList<Integer>();
+        resEntrys = new HashMap<ResType_Entry, ResType_Value>();
+        mapEntries = new ArrayList<>();
         entriesStart = this.cursor.nextInt();
         config = new ResType_Config(this.cursor.getData(),this.cursor.getPos());
         this.cursor.belowMove(config.getLength());
@@ -26,9 +31,19 @@ public class ResType_Type  extends Arsc_Type {
         }
         for(int i : entryOffsets)
         {
+
             ResType_Entry entry = new ResType_Entry(this.cursor.getData(),this.getFileOff() + this.entriesStart + i);
-            ResType_Value value = new ResType_Value(this.cursor.getData(),entry.getFileOff() + entry.getLength());
-            resEntrys.put(entry,value);
+            if((entry.flags & 0x0001) != 0)
+            {
+                ResType_MapEntry mapEntry = new ResType_MapEntry(this.cursor.getData(),this.getFileOff() + this.entriesStart + i);
+                mapEntries.add(mapEntry);
+            }
+            else
+            {
+                ResType_Value value = new ResType_Value(this.cursor.getData(),entry.getFileOff() + entry.getLength());
+                resEntrys.put(entry,value);
+            }
+
         }
 
     }

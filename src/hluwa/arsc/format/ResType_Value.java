@@ -3,10 +3,10 @@ package hluwa.arsc.format;
 import hluwa.common.struct;
 
 public class ResType_Value extends struct {
-    short size;
-    byte res0;
-    byte dataType;
-    int data;
+    public short size;
+    public byte res0;
+    public byte dataType;
+    public int data;
     public ResType_Value(byte[] data, int off) {
         super(data, off);
     }

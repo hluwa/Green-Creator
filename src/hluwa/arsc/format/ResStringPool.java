@@ -6,12 +6,12 @@ import hluwa.common.struct;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class ResStringPool  extends Arsc_Struct {
-    ResStringPool_Header stringPool_header;
-    ArrayList<Integer> string_offs = new ArrayList<Integer>();
-    ArrayList<Integer> style_offs = new ArrayList<Integer>();
-    ArrayList<ResStringPool_Item> strings = new ArrayList<ResStringPool_Item>();
-//    ArrayList<ResStringPool_Item> styles = new ArrayList<ResStringPool_Item>();
+public class ResStringPool  extends struct {
+    public ResStringPool_Header stringPool_header;
+    public ArrayList<Integer> string_offs;
+    public ArrayList<Integer> style_offs;
+    public ArrayList<ResStringPool_Item> strings;
+//    public ArrayList<ResStringPool_Item> styles = new ArrayList<ResStringPool_Item>();
 
     public ResStringPool(byte[] data, int off) {
         super(data, off);
@@ -20,8 +20,10 @@ public class ResStringPool  extends Arsc_Struct {
 
     @Override
     public void parseData() {
-        super.parseData();
         stringPool_header = new ResStringPool_Header(this.cursor.getData(),this.cursor.getPos());
+        string_offs = new ArrayList<Integer>();
+        style_offs  = new ArrayList<Integer>();
+        strings = new ArrayList<ResStringPool_Item>();
         this.cursor.belowMove(stringPool_header.getLength());
         for(int i = 0; i < stringPool_header.string_count; i++)
         {
