@@ -1,2 +1,5 @@
 依赖于dex字节码特征的Android一键去广告。
 原理文章见：http://www.hluwa.cn/tools/202.html
+
+This repository the mainly is update ApkParser.
+Current include DexParser and ArscParser(update...)。
