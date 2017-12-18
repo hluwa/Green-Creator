@@ -2,15 +2,14 @@ package hluwa.arsc.format;
 
 import hluwa.arsc.base.Arsc_Type;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 
 public class ResType_Type  extends Arsc_Type {
     public int entriesStart;
     public ResType_Config config;
     public ArrayList<Integer> entryOffsets;
     public ArrayList<ResType_MapEntry> mapEntries;
-    public HashMap<ResType_Entry,ResType_Value> resEntrys;
+    public Map<ResType_Entry,ResType_Value> resEntrys;
 
     public ResType_Type(byte[] data, int off) {
         super(data, off);
@@ -20,7 +19,7 @@ public class ResType_Type  extends Arsc_Type {
     public void parseData() {
         super.parseData();
         entryOffsets = new ArrayList<Integer>();
-        resEntrys = new HashMap<ResType_Entry, ResType_Value>();
+        resEntrys = new LinkedHashMap<ResType_Entry, ResType_Value>();
         mapEntries = new ArrayList<>();
         entriesStart = this.cursor.nextInt();
         config = new ResType_Config(this.cursor.getData(),this.cursor.getPos());

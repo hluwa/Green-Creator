@@ -19,7 +19,7 @@ public class ResStringPool_Item extends struct {
 
     @Override
     public String toString() {
-        return new String(body);
+        return new String(body).trim();
     }
 
     @Override

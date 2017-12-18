@@ -15,7 +15,7 @@ public class GreenCreator {
 		String path = "/Users/hluwa/Downloads/com.fujicubesoft.ManyBricksBreaker/classes.dex";
 		String arscPath = "/Users/hluwa/Downloads/com.fujicubesoft-1.ManyBricksBreaker/resources.arsc";
 		ArscFile arscFile = ARSCParser.ParseArsc(new File(arscPath));
-//		System.out.println(arscFile.stringPool.strings.get(0));
+//		System.out.println(arscFile.getStringById(0x7F05001B));
 //		System.exit(0);
 		DexChanger changer = new DexChanger(new File(path));
 		DexFile dexfile = changer.getDexFile();
