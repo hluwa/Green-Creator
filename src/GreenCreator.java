@@ -14,7 +14,7 @@ public class GreenCreator {
 	{
 		String path = "/Users/hluwa/Downloads/Snapchat_v10.23.5.0_apkpure-1.com/classes.dex";
 		String arscPath = "/Users/hluwa/Downloads/Snapchat_v10.23.5.0_apkpure-1.com/resources.arsc";
-		//ArscFile arscFile = ARSCParser.ParseArsc(new File(arscPath));
+		ArscFile arscFile = ARSCParser.ParseArsc(new File(arscPath));
 //		System.out.println(arscFile.getStringById(0x7F05001B));
 //		System.exit(0);
 		DexChanger changer = new DexChanger(new File(path));

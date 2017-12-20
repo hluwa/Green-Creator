@@ -13,7 +13,14 @@ public class ResStringPool_Item extends struct {
 
     @Override
     public void parseData() {
-        this.size = new TypeCast(this.cursor.nextData(2)).toLeb128().toInt();
+        byte hval = this.cursor.nextByte();
+        byte lval  = this.cursor.nextByte();
+        if((hval & 0x80) != 0) {
+            size = (((hval & 0x7F) << 8)) | lval;
+        } else {
+            size = hval;
+        }
+//        this.size = new TypeCast(this.cursor.nextData(2)).toLeb128().toInt();
         body = this.cursor.nextString();
     }
 
