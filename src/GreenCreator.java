@@ -12,9 +12,9 @@ import hluwa.dex.type.uLeb128;
 public class GreenCreator {
 	public static void main(String args[]) throws IOException 
 	{
-		String path = "/Users/hluwa/Downloads/com.fujicubesoft.ManyBricksBreaker/classes.dex";
-		String arscPath = "/Users/hluwa/Downloads/com.fujicubesoft-1.ManyBricksBreaker/resources.arsc";
-		ArscFile arscFile = ARSCParser.ParseArsc(new File(arscPath));
+		String path = "/Users/hluwa/Downloads/Snapchat_v10.23.5.0_apkpure-1.com/classes.dex";
+		String arscPath = "/Users/hluwa/Downloads/Snapchat_v10.23.5.0_apkpure-1.com/resources.arsc";
+		//ArscFile arscFile = ARSCParser.ParseArsc(new File(arscPath));
 //		System.out.println(arscFile.getStringById(0x7F05001B));
 //		System.exit(0);
 		DexChanger changer = new DexChanger(new File(path));

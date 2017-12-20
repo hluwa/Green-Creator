@@ -165,7 +165,12 @@ public class DexFile {
 	}
 
 	public String getString(int id) {
-		return new String(string_data_list.get(id).body);
+		String res = new String(string_data_list.get(id).body);
+		if(res.endsWith("\0") && res.length() >= 2)
+		{
+			res = new String(res.getBytes(),0,res.length()-1);
+		}
+		return res;
 	}
 
 	public File getFile() {

@@ -36,7 +36,7 @@ public class debug_info_item extends Item {
 		debug_opcode op;
 		do {
 			byte b = this.cursor.nextByte();
-			op = b>=0x0a ? debug_opcode.DBG_UNKNOW : debug_opcode.values()[b];
+			op = (b & 0x0FF) >=0x0a ? debug_opcode.DBG_UNKNOW : debug_opcode.values()[b];
 			opcodes.add(op) ;
 	    } while (op != debug_opcode.DBG_END_SEQUENCE);
 	}

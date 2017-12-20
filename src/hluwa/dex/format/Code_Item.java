@@ -65,7 +65,7 @@ public class Code_Item extends Item {
 		}
 		if(debug_info_off != 0) 
 		{
-			debug_info = new debug_info_item(this.cursor.getData(),this.cursor.getPos());
+			debug_info = new debug_info_item(this.cursor.getData(),debug_info_off);
 		}
 	}
 }

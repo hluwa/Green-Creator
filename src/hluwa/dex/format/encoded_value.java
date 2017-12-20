@@ -22,19 +22,23 @@ public class encoded_value extends Item {
 		{
 			encoded_array arr = new encoded_array(this.cursor.getData(),this.cursor.getPos());
 			value = this.cursor.nextData(arr.getLength());
+			return;
 		}
 		if(type == value_type.VALUE_ANNOTATION) 
 		{
 			encoded_annotation arr = new encoded_annotation(this.cursor.getData(),this.cursor.getPos());
 			value = this.cursor.nextData(arr.getLength());
+			return;
 		}
 		if(type == value_type.VALUE_NULL) 
 		{
 			value = new byte[0];
+			return;
 		}
 		if(type == value_type.VALUE_BOOLEAN) 
 		{
 			value = new byte[0];
+			return;
 		}
 		value = this.cursor.nextData(arg + 1);
 	}
