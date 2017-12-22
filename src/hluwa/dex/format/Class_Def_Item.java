@@ -43,18 +43,18 @@ public class Class_Def_Item extends Item {
 		annotations_off = this.cursor.nextInt();
 		class_data_off = this.cursor.nextInt();
 		static_value_off = this.cursor.nextInt();
-		if (class_data_off != 0) {
+		if (class_data_off > 0 && class_data_off < this.cursor.getLength()) {
 			this.class_data = new Class_Data(this.cursor.getData(), class_data_off);
 		}
-		if(interfaces_off != 0) 
+		if(interfaces_off != 0  && interfaces_off < this.cursor.getLength())
 		{
 			this.interfaces = new Type_List_Item(this.cursor.getData(), interfaces_off);
 		}
-		if(static_value_off != 0) 
+		if(static_value_off != 0 && static_value_off < this.cursor.getLength())
 		{
 			this.static_value = new encoded_array(this.cursor.getData(), static_value_off);
 		}
-		if(annotations_off != 0) 
+		if(annotations_off != 0 && annotations_off < this.cursor.getLength())
 		{
 			this.annotations = new annotations_directory_item(this.cursor.getData(),annotations_off);
 		}

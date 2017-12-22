@@ -17,6 +17,10 @@ public class annotation_element extends Item {
 	public void parseData() {
 		name_idx = this.cursor.nextuLeb128();
 		value = new encoded_value(this.cursor.getData(),this.cursor.getPos());
+		if(value.value == null)
+		{
+			value = null;
+		}
 	}
 
 	@Override

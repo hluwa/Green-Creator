@@ -45,6 +45,15 @@ public class DexFile {
 		return null;
 	}
 
+	public static boolean isDexFile(byte[] bytes)
+	{
+		if(bytes == null || bytes.length < 4 || bytes[0] != 0x64  || bytes[1] != 0x65 || bytes[2] != 0x78 || bytes[3]!= 0x0A)
+		{
+			return false;
+		}
+		return true;
+	}
+
 	public static boolean isDexFile(File file){
 		if (file == null) {
 			return false;
@@ -160,7 +169,8 @@ public class DexFile {
 
 	public String getName(Method_Id_Item method) {
 		String className = getNameByTypeId(method.class_id).replaceAll("/", "\\.");
-		className = className.substring(1, className.length() - 2);
+		className = className.endsWith(";") ? className.substring(0,className.length() -1) : className;
+		className = className.startsWith("L") ? className.substring(1, className.length() - 1) : className;
 		return className + "." + getString(method.name_id).replaceAll("\0","") + "("+ getNameByProtoId(method.proto_id).replaceAll("\0","") + ")";
 	}
 

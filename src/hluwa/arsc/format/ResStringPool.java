@@ -36,7 +36,7 @@ public class ResStringPool  extends struct {
         int begin = this.getFileOff() + stringPool_header.stringsStart;
         for(int off : string_offs)
         {
-            ResStringPool_Item item = new ResStringPool_Item(this.cursor.getData(),begin + off);
+            ResStringPool_Item item = new ResStringPool_Item(this.cursor.getData(),begin + off,stringPool_header.flag);
             strings.add(item);
         }
 //        styles is can't parse ,direct skip

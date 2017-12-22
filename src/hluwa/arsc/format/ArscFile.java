@@ -14,17 +14,17 @@ public class ArscFile {
         ArrayList<String> strings = new ArrayList<String>();
         for(ResStringPool_Item item : stringPool.strings)
         {
-            strings.add(new String(item.body));
+            strings.add(item.toString());
         }
         for(ResPackage resPackage : packages)
         {
             for(ResStringPool_Item item : resPackage.keyStrings.strings)
             {
-                strings.add(new String(item.body));
+                strings.add(item.toString());
             }
             for(ResStringPool_Item item : resPackage.typeStrings.strings)
             {
-                strings.add(new String(item.body));
+                strings.add(item.toString());
             }
         }
 
@@ -54,6 +54,10 @@ public class ArscFile {
                         {
                             if(num == entryId)
                             {
+                                if(map.value.dataType == 1)
+                                {
+                                    return getStringById(map.value.data);
+                                }
                                return this.stringPool.strings.get(map.value.data).toString();
                             }
                             num++;
@@ -63,6 +67,10 @@ public class ArscFile {
                     {
                         if(num == entryId)
                         {
+                            if(value.dataType == 1)
+                            {
+                                return getStringById(value.data);
+                            }
                             return this.stringPool.strings.get(value.data).toString();
                         }
                         num++;

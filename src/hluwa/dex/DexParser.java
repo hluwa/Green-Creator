@@ -36,6 +36,11 @@ public class DexParser {
 	}
 
 	public static DexFile ParseDex(ByteCursor cursor) {
+		if(!DexFile.isDexFile(cursor.getData()))
+		{
+			System.out.println("[Error] This file is not DexFile ");
+			return null;
+		}
 		DexFile dexFile = new DexFile();
 		DexHeader header = ParseHeader(cursor);
 		dexFile.setHeader(header);

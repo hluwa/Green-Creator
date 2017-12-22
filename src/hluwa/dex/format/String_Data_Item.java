@@ -30,7 +30,11 @@ public class String_Data_Item extends Item {
 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return new String(body);
+		String res = new String(this.body);
+		if(res.endsWith("\0") && res.length() >= 2)
+		{
+			res = new String(res.getBytes(),0,res.length()-1);
+		}
+		return res;
 	}
 }

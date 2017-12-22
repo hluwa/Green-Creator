@@ -8,6 +8,10 @@ public abstract class struct {
     {
         this.file_off = off;
         cursor = new ByteCursor(data);
+        if(off < 0 || off > data.length)
+        {
+            return;
+        }
         cursor.move(file_off);
         parseData();
     }

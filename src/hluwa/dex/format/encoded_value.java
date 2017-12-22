@@ -16,8 +16,8 @@ public class encoded_value extends Item {
 	@Override
 	public void parseData() {
 		byte b = this.cursor.nextByte();
-		type = value_type.values()[b & 0x1f];
-		arg = (byte) (b >> 5);
+		type = value_type.values()[b & 0xff & 0x1f];
+		arg = (byte) ((b & 0xff) >> 5);
 		if(type == value_type.VALUE_ARRAY) 
 		{
 			encoded_array arr = new encoded_array(this.cursor.getData(),this.cursor.getPos());
@@ -41,6 +41,7 @@ public class encoded_value extends Item {
 			return;
 		}
 		value = this.cursor.nextData(arg + 1);
+
 	}
 
 	@Override

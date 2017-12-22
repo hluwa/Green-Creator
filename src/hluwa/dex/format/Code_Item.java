@@ -63,7 +63,7 @@ public class Code_Item extends Item {
 			this.cursor.aboveMove(handle_size.getLength());
 			this.handle = this.cursor.nextData(handle_len);
 		}
-		if(debug_info_off != 0) 
+		if(debug_info_off != 0 && debug_info_off < this.cursor.getLength())
 		{
 			debug_info = new debug_info_item(this.cursor.getData(),debug_info_off);
 		}

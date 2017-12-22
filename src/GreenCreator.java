@@ -3,6 +3,7 @@ import java.io.IOException;
 
 import hluwa.arsc.ARSCParser;
 import hluwa.arsc.format.ArscFile;
+import hluwa.arsc.format.ResStringPool_Item;
 import hluwa.dex.format.DexFile;
 import hluwa.dex.format.insns_item;
 import hluwa.dex.DexChanger;
@@ -12,10 +13,10 @@ import hluwa.dex.type.uLeb128;
 public class GreenCreator {
 	public static void main(String args[]) throws IOException 
 	{
-		String path = "/Users/hluwa/Downloads/Snapchat_v10.23.5.0_apkpure-1.com/classes.dex";
-		String arscPath = "/Users/hluwa/Downloads/Snapchat_v10.23.5.0_apkpure-1.com/resources.arsc";
-		ArscFile arscFile = ARSCParser.ParseArsc(new File(arscPath));
-//		System.out.println(arscFile.getStringById(0x7F05001B));
+		String path = "/Users/hluwa/APK/17/classes4.dex";
+		String arscPath = "/Users/hluwa/APK/9-1/resources.arsc";
+//		ArscFile arscFile = ARSCParser.ParseArsc(new File(arscPath));
+//		System.out.println(arscFile.getStringById(0x7F080001));
 //		System.exit(0);
 		DexChanger changer = new DexChanger(new File(path));
 		DexFile dexfile = changer.getDexFile();
