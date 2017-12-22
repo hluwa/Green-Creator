@@ -14,9 +14,9 @@ public class GreenCreator {
 	public static void main(String args[]) throws IOException 
 	{
 		String path = "/Users/hluwa/APK/17/classes4.dex";
-		String arscPath = "/Users/hluwa/APK/9-1/resources.arsc";
-//		ArscFile arscFile = ARSCParser.ParseArsc(new File(arscPath));
-//		System.out.println(arscFile.getStringById(0x7F080001));
+		String arscPath = "/Users/hluwa/APK/1_18-1/resources.arsc";
+		ArscFile arscFile = ARSCParser.ParseArsc(new File(arscPath));
+//		System.out.println(arscFile.getStringById(0x7F050000));
 //		System.exit(0);
 		DexChanger changer = new DexChanger(new File(path));
 		DexFile dexfile = changer.getDexFile();

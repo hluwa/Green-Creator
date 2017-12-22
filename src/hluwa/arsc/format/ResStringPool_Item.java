@@ -26,7 +26,14 @@ public class ResStringPool_Item extends struct {
             size = hval;
         }
 //        this.size = new TypeCast(this.cursor.nextData(2)).toLeb128().toInt();
-        body = this.cursor.nextString();
+        if((flags & UTF8_FLAG) == UTF8_FLAG)
+        {
+            body = this.cursor.nextString();
+        }
+        else
+        {
+            body = this.cursor.nextData(size * 2);
+        }
     }
 
     @Override
